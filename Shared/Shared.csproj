@@ -5,4 +5,9 @@
     <RootNamespace>BlazorApp.Shared</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="6.1.2" />
+    <PackageReference Include="WMBlazorSlickCarousel" Version="1.0.1" />
+  </ItemGroup>
+
 </Project>
