@@ -1,0 +1,27 @@
+﻿@page "/"
+
+@using datasharedsite.SwanShop;
+
+@inject HttpClient Http
+
+<PageTitle>@data.PageTitle</PageTitle>
+
+
+<Banner></Banner>
+
+<MonthCategories></MonthCategories>
+
+<FeaturedProduct></FeaturedProduct>
+
+@code
+{
+    private bool ShowErrors;
+    private string Error = "";
+
+    private SwanShopDto data { get; set; } = new SwanShopDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        data = await Http.GetFromJsonAsync<SwanShopDto>($"/api/GetData");
+    }
+}

@@ -1,0 +1,39 @@
+﻿@page "/logout"
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject AuthenticationStateProvider authenticationStateProvider;
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+@using BlazorApp.Shared;
+@using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
+
+<PageTitle>Log Out</PageTitle>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await ((ApiAuthenticationStateProvider)authenticationStateProvider).GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity != null)
+        {
+            if (user.Identity.IsAuthenticated)
+            {
+                var sUrl = $"/api/Logout?userName={user.Identity.Name}";
+
+                var result = await Http.GetStringAsync(sUrl);
+
+                if (result == "logged out")
+                {
+                    await localStorage.RemoveItemAsync($"accessToken");
+                    await localStorage.RemoveItemAsync($"refreshToken");
+                    ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
+
+                    NavigationManager.NavigateTo("/");
+                }
+            }
+        }
+    }
+}

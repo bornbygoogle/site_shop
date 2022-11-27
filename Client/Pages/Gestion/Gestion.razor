@@ -1,0 +1,267 @@
+﻿@page "/gestion"
+@using System.IdentityModel.Tokens.Jwt;
+@using BlazorApp.Shared;
+@using System.Security.Claims;
+
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authenticationStateProvider;
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject HttpClient Http
+
+<PageTitle>Gestion</PageTitle>
+
+<EditForm Model="general" OnValidSubmit="HandleGeneral" Context="EditForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+@*    <div class="row mt-4">
+        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <h5><label for="logo">Logo</label></h5>
+            <InputText Id="logo" Class="form-control" @bind-Value="general.Logo" />
+            <ValidationMessage For="@(() => general.Logo)" />
+        </div>*@
+        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <h5><label for="title">Page title</label></h5>
+            <InputText Id="page-title" Class="form-control" @bind-Value="general.Title" />
+            <ValidationMessage For="@(() => general.Title)" />
+        </div>
+@*        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+            <h5><label for="subtitle">Page subtitle</label></h5>
+            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.SubTitle" />
+            <ValidationMessage For="@(() => general.SubTitle)" />
+        </div>
+    </div>*@
+@*    <div class="row">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+            <h5><label for="subtitle">Image background banner</label></h5>
+            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
+            <ValidationMessage For="@(() => general.ImageBGBanner)" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+            <h5><label for="subtitle">Image background banner :</label>&nbsp;&nbsp;&nbsp;<ColorSelector InColor="@general.BackgroundColor" ReturnedColor="ColorChange"></ColorSelector></h5>
+            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
+            <ValidationMessage For="@(() => general.BackgroundColor)" />
+        </div>
+    </div>*@
+
+    <!---------------------------     Section Albums      ------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section Albums</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-6 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionAlbums" />
+    <ValidationMessage For="@(() => general.PositionAlbums)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-6 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-6 form-control w-100 justify-content-start" @bind-Value="general.ActiveAlbums" />
+    <ValidationMessage For="@(() => general.ActiveAlbums)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-0 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <!---------------------------     Section List Videos      ------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section Videos</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionVideos" />
+    <ValidationMessage For="@(() => general.PositionVideos)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-12 form-control w-100 justify-content-start" @bind-Value="general.ActiveVideos" />
+    <ValidationMessage For="@(() => general.ActiveVideos)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <!---------------------------     Section List Photos      ------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section Photos</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionPhotos" />
+    <ValidationMessage For="@(() => general.PositionPhotos)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-12 form-control w-100 justify-content-start" @bind-Value="general.ActivePhotos" />
+    <ValidationMessage For="@(() => general.ActivePhotos)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <!---------------------------     Section About      ------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section About</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionAbout" />
+    <ValidationMessage For="@(() => general.PositionAbout)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-12 form-control w-100 justify-content-start" @bind-Value="general.ActiveAbout" />
+    <ValidationMessage For="@(() => general.ActiveAbout)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+    <label class="col-lg-2 col-md-4 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="image-bgabout">Img background About</label>
+    <InputText Id="image-bgabout" Class="col-lg-10 col-md-8 col-sm-12 form-control w-100" @bind-Value="general.ImageBGAbout" />
+    <ValidationMessage For="@(() => general.ImageBGAbout)" />
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <!---------------------------     Section Quote   --------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section Quote</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionQuote" />
+    <ValidationMessage For="@(() => general.PositionQuote)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-12 form-control w-100 justify-content-start" @bind-Value="general.ActiveQuote" />
+    <ValidationMessage For="@(() => general.ActiveQuote)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <!---------------------------     Section Service   --------------------------------------------->
+    @*                <div class="row">
+    <div class="card border-0 col-lg-12 col-md-12 col-sm-12">
+    <div class="card-body">
+    <h4 class="card-title">Section Service</h4>
+    <div class="form-group form-inline mx-0 mt-0 pt-0 pb-0">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Position</label>
+    <InputSelectEnum Class="col-lg-1 col-md-1 col-sm-12 form-control w-100" @bind-Value="general.PositionService" />
+    <ValidationMessage For="@(() => general.PositionService)" />
+
+    <label class="col-lg-2 col-md-2 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+
+    <label class="col-lg-1 col-md-1 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">Active</label>
+    <InputCheckbox Id="about-details" Class="col-lg-1 col-md-1 col-sm-12 form-control w-100 justify-content-start" @bind-Value="general.ActiveService" />
+    <ValidationMessage For="@(() => general.ActiveService)" />
+
+    <label class="col-lg-6 col-md-6 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="about-details">&nbsp;</label>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 d-xl-inline-flex d-md-inline-flex mx-lg-1 mx-md-1 mx-sm-1 mt-lg-1 mt-md-1 mt-sm-1">
+    <label class="col-lg-2 col-md-4 col-sm-12 justify-content-lg-end justify-content-md-start justify-content-sm-between" for="image-bgabout">Img background Service</label>
+    <InputText Id="image-bgbanner" Class="col-lg-10 col-md-8 col-sm-12 form-control w-100" @bind-Value="general.ImageBGService" />
+    <ValidationMessage For="@(() => general.ImageBGService)" />
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+</EditForm>
+
+@code
+{
+    private bool ShowErrors;
+    private string Error = "";
+
+    private General general { get; set; } = new General();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GestionAuthorization();
+    }
+
+    private async void GestionAuthorization()
+    {
+        var authState = await ((ApiAuthenticationStateProvider)authenticationStateProvider).GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        var refreshToken = await localStorage.GetItemAsync<string>($"refreshToken");
+
+        //Si non, redirect user to login
+        if ((user == null || user.Identity == null) && refreshToken == null)
+            NavigationManager.NavigateTo("/login");
+        else if (!user.Identity.IsAuthenticated && refreshToken != null)
+        {
+            var claims = ClsCommon.ParseClaimsFromJwt(refreshToken);
+            var valueName = claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault();
+            var userNameRefreshToken = valueName != null ? valueName.Value : string.Empty;
+
+            var result = await Http.GetStringAsync($"/api/RefreshToken?userName={userNameRefreshToken}&refreshToken={refreshToken}");
+
+            if (result.StartsWith("ERR|"))
+            {
+                //Erreur refresh automatique, redirect user to login
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                var res = result.Split("||REF||");
+                if (res != null && res.Count() == 2)
+                {
+                    await localStorage.SetItemAsync($"accessToken", res[0]);
+                    await localStorage.SetItemAsync($"refreshToken", res[1]);
+
+                    ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(userNameRefreshToken);
+                }
+            }
+        }
+    }
+
+    private async Task HandleGeneral()
+    {
+        //Message = "Updating general information ...";
+
+        //var resultMessage = await Http.PostAsJsonAsync<General>($"{@Configuration["APIEndPoint"]}/Home/UpdateGeneral", general);
+
+        //var result = JsonSerializer.Deserialize<BaseResult>(await resultMessage.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        //Message = result.Successful ? "General information updated" : result.Error;
+
+        var test = general;
+    }
+}
