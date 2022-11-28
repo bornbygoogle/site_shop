@@ -26,6 +26,7 @@
   <ItemGroup>
     <Reference Include="datasharedsite">
       <HintPath>..\..\..\Code\sitemanager\datasharedsite\bin\Debug\net6.0\datasharedsite.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
 
