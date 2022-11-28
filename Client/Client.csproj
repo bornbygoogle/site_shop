@@ -23,11 +23,4 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="datasharedsite">
-      <HintPath>..\..\..\Code\datasharedsite\bin\Debug\net6.0\datasharedsite.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-
 </Project>
