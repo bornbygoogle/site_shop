@@ -20,14 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Code\sitemanager\datasharedsite\datasharedsite.csproj">
-      <Private>True</Private>
-      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>True</ReferenceOutputAssembly>
-      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-      <Aliases>global</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="datasharedsite">
+      <HintPath>..\..\..\Code\sitemanager\datasharedsite\bin\Debug\net6.0\datasharedsite.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
