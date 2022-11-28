@@ -20,14 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="datasharedsite">
-      <HintPath>..\..\..\Code\sitemanager\datasharedsite\bin\Debug\net6.0\datasharedsite.dll</HintPath>
+    <ProjectReference Include="..\..\..\Code\sitemanager\datasharedsite\datasharedsite.csproj">
       <Private>True</Private>
-    </Reference>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>
