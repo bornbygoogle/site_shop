@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Code\sitemanager\datasharedsite\datasharedsite.csproj" />
+    <ProjectReference Include="..\..\..\Code\sitemanager\datasharedsite\datasharedsite.csproj">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
