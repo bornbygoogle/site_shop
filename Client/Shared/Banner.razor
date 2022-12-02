@@ -1,6 +1,14 @@
 ﻿@using MudBlazor;
+@using BlazorApp.Shared;
+@inject NavigationManager NavigationManager
 
-<MudCarousel id="template-mo-zay-hero-carousel" Class="mud-width-full carousel slide" Style="height:800px;" ShowArrows="true" ShowBullets="true" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+<MudCarousel id="@ClsCommon.IndexCarouselId"
+             Class="mud-width-full carousel slide"
+             Style="@_carouselStyle"
+             ShowArrows="_carouselShowArrows"
+             ShowBullets="_carouselShowBullets"
+             EnableSwipeGesture="_carouselEnableSwipeGesture"
+             AutoCycle="_carouselAutoCycle" TData="object">
     <MudCarouselItem Transition="Transition.Slide">
         <div class="container">
             <div class="row p-5">
@@ -62,3 +70,56 @@
         </div>
     </MudCarouselItem>
 </MudCarousel>
+
+@code {
+    [Parameter]
+    public SwanShop Data { get; set; }
+
+    private IdConfiguration _configBanner = null;
+
+    private string _carouselStyle = string.Empty;
+    private bool _carouselShowArrows = false;
+    private bool _carouselShowBullets = false;
+    private bool _carouselEnableSwipeGesture = false;
+    private bool _carouselAutoCycle = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty);
+        //Data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+        if (Data != null && Data.Configs != null && Data.Configs.Count > 0)
+        {
+            var indexConfigs = Data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
+                    {
+                        var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
+                        if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
+                        {
+                            _carouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault().Value.Replace("|", ";") ?? string.Empty;
+
+                            var valueShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault().Value ?? "0";
+                            _carouselShowArrows = valueShowArrows == "1" ? true : false;
+
+                            var valueShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault().Value ?? "0";
+                            _carouselShowBullets = valueShowBullets == "1" ? true : false;
+
+                            var valueEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault().Value ?? "0";
+                            _carouselEnableSwipeGesture = valueEnableSwipeGesture == "1" ? true : false;
+
+                            var valueAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault().Value ?? "0";
+                            _carouselAutoCycle = valueAutoCycle == "1" ? true : false;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        // Update the UI
+        StateHasChanged();
+    }
+}

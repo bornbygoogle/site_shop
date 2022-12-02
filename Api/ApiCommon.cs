@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -8,8 +9,8 @@ namespace BlazorApp.Api
 {
     public class ApiCommon
     {
-        public static string URL_SERVER = "http://cache-service.minhan-tran.fr";
-        //public static string URL_SERVER_2 = "https://logservice-app-20221012212833.redmushroom-aa658d30.northeurope.azurecontainerapps.io";
+        public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr/";
+        //public static string URL_SERVER_SITE_MANAGER_2 = "https://sitemanager.hjb0crb4bmcuawhh.northeurope.azurecontainer.io";
         //public static string URL_SERVER = "https://localhost:7132";
 
         private static HttpClient _httpClient;
@@ -30,7 +31,7 @@ namespace BlazorApp.Api
 
         #region Http
 
-        private static HttpClient GetHttpClient()
+        private static HttpClient GetHttpClient(string accessToken = null)
         {
             if (_httpClient == null)
             {
@@ -38,6 +39,11 @@ namespace BlazorApp.Api
 
                 _httpClient.Timeout = TimeSpan.FromSeconds(5);
             }
+
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            if (!string.IsNullOrEmpty(accessToken))
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
 
             return _httpClient;
         }
@@ -120,7 +126,7 @@ namespace BlazorApp.Api
             return result;
         }
 
-        public static T ExecuteHttpPost<T>(string sUrl, object oObject)
+        public static T ExecuteHttpPost<T>(string sUrl, object oObject, string accessToken = null)
         {
             var nbr = 0;
             T result = default(T);
@@ -131,7 +137,9 @@ namespace BlazorApp.Api
                 {
                     try
                     {
-                        var res = GetHttpClient().PostAsync(sUrl, new StringContent(System.Text.Json.JsonSerializer.Serialize(oObject), Encoding.UTF8, "application/json")).Result;
+                        var httpClient = GetHttpClient(accessToken);
+
+                        var res = httpClient.PostAsync(sUrl, new StringContent(Serialize(oObject), Encoding.UTF8, "application/json")).Result;
 
                         res.EnsureSuccessStatusCode();
 
@@ -160,6 +168,55 @@ namespace BlazorApp.Api
             }
 
             return result;
+        }
+
+        public static string ExecuteHttpPost(string sUrl, object oObject, string accessToken = null)
+        {
+            var nbr = 0;
+            string result = string.Empty;
+
+            try
+            {
+                do
+                {
+                    try
+                    {
+                        var httpClient = GetHttpClient(accessToken);
+
+                        var res = httpClient.PostAsync(sUrl, new StringContent(Serialize(oObject), Encoding.UTF8, "application/json")).Result;
+
+                        res.EnsureSuccessStatusCode();
+
+                        nbr = 11;
+
+                        result = res.Content.ReadAsStringAsync().Result;
+                    }
+                    catch (Exception e)
+                    {
+                        if (nbr >= 10)
+                            throw;
+                    }
+
+                    Thread.Sleep(1000);
+
+                    nbr++;
+                }
+                while (nbr < 10);
+            }
+            catch
+            {
+                //var res = GetHttpClient().GetAsync("https://black-bay-0e87ebf03.1.azurestaticapps.net/").Result; 
+            }
+
+            return result;
+        }
+
+        public static string Serialize(object oObject, bool ignoreNullOrDefault = true)
+        {
+            if (ignoreNullOrDefault)
+                return Newtonsoft.Json.JsonConvert.SerializeObject(oObject, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            else
+                return Newtonsoft.Json.JsonConvert.SerializeObject(oObject);
         }
 
         #endregion Http

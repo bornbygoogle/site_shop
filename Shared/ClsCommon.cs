@@ -12,6 +12,9 @@ namespace BlazorApp.Shared
 {
     public static class ClsCommon
     {
+        public const string IndexCarouselId = "template-mo-zay-hero-carousel";
+
+
         public static string Encrypt(string textToEncrypt)
         {
             string ToReturn = "";

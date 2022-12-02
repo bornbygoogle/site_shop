@@ -2,6 +2,6 @@
 {
     public class BaseDto
     {
-        public string PageTitle { get; set; }
+        public string HasChange { get; set; }
     }
 }

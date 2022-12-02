@@ -10,39 +10,55 @@
 
 <PageTitle>Gestion</PageTitle>
 
-<EditForm Model="general" OnValidSubmit="HandleGeneral" Context="EditForm">
+<EditForm Model="dataSwanShop" OnValidSubmit="HandleGeneral" Context="EditForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
-@*    <div class="row mt-4">
-        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-            <h5><label for="logo">Logo</label></h5>
-            <InputText Id="logo" Class="form-control" @bind-Value="general.Logo" />
-            <ValidationMessage For="@(() => general.Logo)" />
-        </div>*@
-        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-            <h5><label for="title">Page title</label></h5>
-            <InputText Id="page-title" Class="form-control" @bind-Value="general.Title" />
-            <ValidationMessage For="@(() => general.Title)" />
-        </div>
-@*        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-            <h5><label for="subtitle">Page subtitle</label></h5>
-            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.SubTitle" />
-            <ValidationMessage For="@(() => general.SubTitle)" />
-        </div>
+    @*    <div class="row mt-4">
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+    <h5><label for="logo">Logo</label></h5>
+    <InputText Id="logo" Class="form-control" @bind-Value="general.Logo" />
+    <ValidationMessage For="@(() => general.Logo)" />
     </div>*@
-@*    <div class="row">
-        <div class="form-group col-lg-12 col-md-12 col-sm-12">
-            <h5><label for="subtitle">Image background banner</label></h5>
-            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
-            <ValidationMessage For="@(() => general.ImageBGBanner)" />
-        </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="title">Page title</label></h5>
+        <InputText Id="index-title" Class="form-control" @bind-Value="dataPageTitle" />
+        @*        <ValidationMessage For="@(() => general.PageTitle)" />*@
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="carouselStyle">Carousel style</label></h5>
+        <InputText Id="index-carouselStyle" Class="form-control" @bind-Value="_carouselStyle" />
+        @*<ValidationMessage For="@(() => general.SubTitle)" />*@
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="carouselShowArrows">Carousel ShowArrows</label></h5>
+        <InputCheckbox Id="index-carouselShowArrows" @bind-Value="_carouselShowArrows"></InputCheckbox>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="carouselShowBullets">Carousel ShowBullets</label></h5>
+        <InputCheckbox Id="index-carouselShowBullets" @bind-Value="_carouselShowBullets"></InputCheckbox>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="carouselEnableSwipeGesture">Carousel EnableSwipeGesture</label></h5>
+        <InputCheckbox Id="index-carouselEnableSwipeGesture" @bind-Value="_carouselEnableSwipeGesture"></InputCheckbox>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-12">
+        <h5><label for="carouselAutoCycle">Carousel AutoCycle</label></h5>
+        <InputCheckbox Id="index-carouselAutoCycle" @bind-Value="_carouselAutoCycle"></InputCheckbox>
+    </div>
+    @*</div>*@
+    @*    <div class="row">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <h5><label for="subtitle">Image background banner</label></h5>
+    <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
+    <ValidationMessage For="@(() => general.ImageBGBanner)" />
+    </div>
     </div>
     <div class="row">
-        <div class="form-group col-lg-12 col-md-12 col-sm-12">
-            <h5><label for="subtitle">Image background banner :</label>&nbsp;&nbsp;&nbsp;<ColorSelector InColor="@general.BackgroundColor" ReturnedColor="ColorChange"></ColorSelector></h5>
-            <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
-            <ValidationMessage For="@(() => general.BackgroundColor)" />
-        </div>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <h5><label for="subtitle">Image background banner :</label>&nbsp;&nbsp;&nbsp;<ColorSelector InColor="@general.BackgroundColor" ReturnedColor="ColorChange"></ColorSelector></h5>
+    <InputText Id="page-subtitle" Class="form-control" @bind-Value="general.ImageBGBanner" />
+    <ValidationMessage For="@(() => general.BackgroundColor)" />
+    </div>
     </div>*@
 
     <!---------------------------     Section Albums      ------------------------------------------->
@@ -208,11 +224,49 @@
     private bool ShowErrors;
     private string Error = "";
 
-    private General general { get; set; } = new General();
+    private SwanShop dataSwanShop { get; set; } = new SwanShop();
+
+    private string dataPageTitle = string.Empty;
+    private string _carouselStyle = string.Empty;
+    private bool _carouselShowArrows = false;
+    private bool _carouselShowBullets = false;
+    private bool _carouselEnableSwipeGesture = false;
+    private bool _carouselAutoCycle = false;
 
     protected override async Task OnInitializedAsync()
     {
         GestionAuthorization();
+
+        dataSwanShop = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+        if (dataSwanShop != null && dataSwanShop.Configs != null && dataSwanShop.Configs.Count > 0)
+        {
+            var indexConfigs = dataSwanShop.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count() > 0)
+                    {
+                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                        if (configPageTitle != null)
+                            dataPageTitle = configPageTitle.Value;
+                    }
+
+                    if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
+                    {
+                        var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
+                        if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
+                        {
+                            _carouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault().Value ?? string.Empty;
+                            _carouselShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault().Value == "1";
+                            _carouselShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault().Value == "1";
+                            _carouselEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault().Value == "1";
+                            _carouselAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault().Value == "1";
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private async void GestionAuthorization()
@@ -256,12 +310,76 @@
     {
         //Message = "Updating general information ...";
 
-        //var resultMessage = await Http.PostAsJsonAsync<General>($"{@Configuration["APIEndPoint"]}/Home/UpdateGeneral", general);
+        var accessToken = await localStorage.GetItemAsync<string>("accessToken");
+        if (!string.IsNullOrEmpty(accessToken))
+        {
+            if (!string.IsNullOrEmpty(dataPageTitle))
+            {
+                var indexConfigs = dataSwanShop.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+                if (indexConfigs.Count() > 0)
+                {
+                    foreach (var item in indexConfigs)
+                    {
+                        if (item.Properties != null)
+                        {
+                            var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                            if (configPageTitle != null)
+                            {
+                                configPageTitle.Value = dataPageTitle;
+                                configPageTitle.HasChange = "1";
+                            }
+                        }
+
+                        if (item.SpecificIdProperties != null)
+                        {
+                            var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
+                            if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
+                            {
+                                var configCarouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault();
+                                if (configCarouselStyle != null)
+                                {
+                                    configCarouselStyle.Value = _carouselStyle;
+                                    configCarouselStyle.HasChange = "1";
+                                }
+                                
+                                var configCarouselShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault();
+                                if (configCarouselShowArrows != null)
+                                {
+                                    configCarouselShowArrows.Value = _carouselShowArrows ? "1" : "0";
+                                    configCarouselShowArrows.HasChange = "1";
+                                }
+
+                                var configCarouselShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault();
+                                if (configCarouselShowBullets != null)
+                                {
+                                    configCarouselShowBullets.Value = _carouselShowBullets ? "1" : "0";
+                                    configCarouselShowBullets.HasChange = "1";
+                                }
+
+                                var configCarouselEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault();
+                                if (configCarouselEnableSwipeGesture != null)
+                                {
+                                    configCarouselEnableSwipeGesture.Value = _carouselEnableSwipeGesture ? "1" : "0";
+                                    configCarouselEnableSwipeGesture.HasChange = "1";
+                                }
+
+                                var configCarouselAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault();
+                                if (configCarouselAutoCycle != null)
+                                {
+                                    configCarouselAutoCycle.Value = _carouselAutoCycle ? "1" : "0";
+                                    configCarouselAutoCycle.HasChange = "1";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            var resultMessage = await Http.PostAsJsonAsync<SwanShop>($"/api/UpdateData?accessToken={accessToken}", dataSwanShop);
+        }
 
         //var result = JsonSerializer.Deserialize<BaseResult>(await resultMessage.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         //Message = result.Successful ? "General information updated" : result.Error;
-
-        var test = general;
     }
 }

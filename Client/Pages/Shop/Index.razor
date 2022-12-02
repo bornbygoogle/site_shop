@@ -4,24 +4,47 @@
 
 @inject HttpClient Http
 
-<PageTitle>@data.PageTitle</PageTitle>
+@if (data != null)
+{
+    <PageTitle>@dataPageTitle</PageTitle>
 
+    <Banner Data="@data"></Banner>
 
-<Banner></Banner>
+    <MonthCategories></MonthCategories>
 
-<MonthCategories></MonthCategories>
-
-<FeaturedProduct></FeaturedProduct>
+    <FeaturedProduct></FeaturedProduct>
+}
 
 @code
 {
     private bool ShowErrors;
     private string Error = "";
 
-    private SwanShopDto data { get; set; } = new SwanShopDto();
+    private SwanShop data { get; set; }
+    private string dataPageTitle = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        data = await Http.GetFromJsonAsync<SwanShopDto>($"/api/GetData");
+        data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var indexConfigs = data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                        if (configPageTitle != null)
+                            dataPageTitle = configPageTitle.Value;
+                    }
+                }
+            }
+
+            // Update the UI
+            StateHasChanged();
+        }
     }
 }

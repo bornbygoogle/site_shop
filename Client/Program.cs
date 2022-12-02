@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using BlazorApp.Client;
-using BlazorApp.Client.Service;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using Blazored.Modal;
