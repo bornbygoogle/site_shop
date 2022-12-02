@@ -12,7 +12,7 @@ namespace BlazorApp.Api.Function
         [FunctionName("GetData")]
         public static IActionResult GetData([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log)
         {
-            var sUrl = $"{ApiCommon.URL_SERVER_SITE_MANAGER}/SwanShop/GetDataSwanShop";
+            var sUrl = $"{ApiCommon.GetUrlServer()}/SwanShop/GetDataSwanShop";
 
             var response = ApiCommon.ExecuteHttpGet<SwanShop>(sUrl);
             if (response != null)

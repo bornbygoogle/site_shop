@@ -9,9 +9,10 @@ namespace BlazorApp.Api
 {
     public class ApiCommon
     {
-        public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr/";
+        public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr";
         //public static string URL_SERVER_SITE_MANAGER_2 = "https://sitemanager.hjb0crb4bmcuawhh.northeurope.azurecontainer.io";
-        //public static string URL_SERVER = "https://localhost:7132";
+        public static string URL_DEV = "https://localhost:7132";
+        public const bool USE_LOCAL_SERVER = false;
 
         private static HttpClient _httpClient;
 
@@ -28,6 +29,14 @@ namespace BlazorApp.Api
 
         //    return listSymbol;
         //}
+
+        public static string GetUrlServer()
+        {
+            if (USE_LOCAL_SERVER)
+                return URL_DEV.EndsWith("/") ? URL_DEV.TrimEnd('/') : URL_DEV;
+            else
+                return URL_SERVER_SITE_MANAGER.EndsWith("/") ? URL_SERVER_SITE_MANAGER.TrimEnd('/') : URL_SERVER_SITE_MANAGER;
+        }
 
         #region Http
 

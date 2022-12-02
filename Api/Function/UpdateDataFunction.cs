@@ -13,7 +13,7 @@ namespace BlazorApp.Api.Function
         [FunctionName("UpdateData")]
         public static IActionResult UpdateData([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] SwanShop data, HttpRequest req, ILogger log)
         {
-            var sUrl = $"{ApiCommon.URL_SERVER_SITE_MANAGER}/SwanShop/UpdateData";
+            var sUrl = $"{ApiCommon.GetUrlServer()}/SwanShop/UpdateData";
 
             var accessToken = req.Query.Where(x => x.Key == "accessToken").FirstOrDefault().Value;
 
