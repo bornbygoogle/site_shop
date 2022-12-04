@@ -1,8 +1,12 @@
 ﻿@using MudBlazor;
+@using BlazorApp.Shared;
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 @page "/shopsingle"
 
-<PageTitle>Shop Single</PageTitle>
+<PageTitle>@pageTitle</PageTitle>
 
 <!-- Open Content -->
 <section class="bg-light">
@@ -12,7 +16,7 @@
                 <div class="card mb-3">
                     <img class="card-img img-fluid" src="assets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
                 </div>
-                <BlazorSlickCarousel @ref="productsCarousel" Configurations="productsConfigurations" Id="multi-item-example">
+                <BlazorSlickCarousel @ref="shopSingleCarousel" Configurations="shopSingleConfigurations" Id="multi-item-example">
                     <BlazorSlickCarouselContent>
                         <div class="col-4">
                             <a href="/shopsingle">
@@ -156,8 +160,40 @@
 <RelatedProducts></RelatedProducts>
 
 @code {
-    public BlazorSlickCarousel productsCarousel;
-    public WMBSCInitialSettings productsConfigurations;
+    public BlazorSlickCarousel? shopSingleCarousel;
+    public WMBSCInitialSettings? shopSingleConfigurations;
+
+    [CascadingParameter(Name = "DataSwanShop")]
+    protected SwanShop? data { get; set; }
+
+    private string pageTitle = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
+            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route.ToLower() == currentUrl);
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                        if (configPageTitle != null)
+                            pageTitle = configPageTitle.Value;
+                    }
+                }
+            }
+        }
+
+    }
 
     protected override void OnInitialized()
     {
@@ -165,7 +201,7 @@
         WMBSCSettings breakpoint800Settings = new WMBSCSettings
             {
                 slidesToShow = 2,
-                arrows = true,
+                arrows = false,
                 dots = false
             };
         WMBSCResponsiveSettings breakpoint800Responsive = new WMBSCResponsiveSettings
@@ -178,7 +214,7 @@
         WMBSCSettings breakpoint400Settings = new WMBSCSettings
             {
                 slidesToShow = 1,
-                arrows = true
+                arrows = false
             };
         WMBSCResponsiveSettings breakpoint400Responsive = new WMBSCResponsiveSettings
             {
@@ -192,9 +228,9 @@
         responsiveSettingsList.Add(breakpoint400Responsive);
 
         // the carousel configurations
-        productsConfigurations = new WMBSCInitialSettings
+        shopSingleConfigurations = new WMBSCInitialSettings
             {
-                arrows = true,
+                arrows = false,
                 dots = false,
                 slidesToShow = 3,
                 slidesToScroll = 3,
@@ -203,7 +239,7 @@
                 centerMode = true,
                 adaptiveHeight = true,
                 autoplay = true,
-                autoplaySpeed=200,
+                autoplaySpeed = 200,
                 touchMove = false
             };
     }

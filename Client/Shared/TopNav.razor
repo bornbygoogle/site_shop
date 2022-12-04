@@ -1,19 +1,39 @@
-﻿@if (!CurrentURL.Contains("gestion"))
+﻿@using BlazorApp.Shared;
+
+@inject NavigationManager NavigationManager
+
+@if (!_currentUrl.Contains("gestion"))
 {
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:@_shopMail">@_shopMail</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:@_shopTelephone">@_shopTelephone</a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                    @if (!string.IsNullOrEmpty(_shopLinkFacebook))
+                    {
+                        <a class="text-light" href="@_shopLinkFacebook" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(_shopLinkInstagram))
+                    {
+                        <a class="text-light" href="@_shopLinkInstagram" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(_shopLinkTwitter))
+                    {
+                        <a class="text-light" href="@_shopLinkTwitter" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(_shopLinkLinkedIn))
+                    {
+                        <a class="text-light" href="@_shopLinkLinkedIn" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                    }
+
                 </div>
             </div>
         </div>
@@ -21,11 +41,79 @@
 }
 else
 {
-    <footer class="bg-dark"></footer>
+    <nav class="bg-dark"></nav>
 }
 
 @code
 {
-    [Parameter]
-    public string CurrentURL { get; set; }
+    [CascadingParameter(Name = "DataSwanShop")]
+    protected SwanShop? data { get; set; }
+
+    private string _currentUrl = string.Empty;
+
+    private string _shopName = string.Empty;
+    private string _shopAddress = string.Empty;
+    private string _shopTelephone = string.Empty;
+    private string _shopMail = string.Empty;
+
+    private string _shopLinkFacebook = string.Empty;
+    private string _shopLinkInstagram = string.Empty;
+    private string _shopLinkTwitter = string.Empty;
+    private string _shopLinkLinkedIn = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
+                        if (configShopName != null)
+                            _shopName = configShopName.Value;
+
+                        var configShopAddress = item.Properties.Where(x => x.Name == "ShopAddress").FirstOrDefault();
+                        if (configShopAddress != null)
+                            _shopAddress = configShopAddress.Value;
+
+                        var configShopTel = item.Properties.Where(x => x.Name == "ShopTel").FirstOrDefault();
+                        if (configShopTel != null)
+                            _shopTelephone = configShopTel.Value;
+
+                        var configShopMail = item.Properties.Where(x => x.Name == "ShopMail").FirstOrDefault();
+                        if (configShopMail != null)
+                            _shopMail = configShopMail.Value;
+
+                        var configShopLinkFacebook = item.Properties.Where(x => x.Name == "ShopLinkFB").FirstOrDefault();
+                        if (configShopLinkFacebook != null)
+                            _shopLinkFacebook = configShopLinkFacebook.Value;
+
+                        var configShopLinkInstagram = item.Properties.Where(x => x.Name == "ShopLinkIG").FirstOrDefault();
+                        if (configShopLinkInstagram != null)
+                            _shopLinkInstagram = configShopLinkInstagram.Value;
+
+                        var configShopLinkTwitter = item.Properties.Where(x => x.Name == "ShopLinkTW").FirstOrDefault();
+                        if (configShopLinkTwitter != null)
+                            _shopLinkTwitter = configShopLinkTwitter.Value;
+
+                        var configShopLinkLinkedIn = item.Properties.Where(x => x.Name == "ShopLinkLI").FirstOrDefault();
+                        if (configShopLinkLinkedIn != null)
+                            _shopLinkLinkedIn = configShopLinkLinkedIn.Value;
+                    }
+                }
+            }
+
+            //StateHasChanged();
+        }
+    }
+
 }

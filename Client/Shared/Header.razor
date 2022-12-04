@@ -1,9 +1,13 @@
-﻿@if (!CurrentURL.Contains("gestion"))
+﻿@using BlazorApp.Shared;
+
+@inject NavigationManager NavigationManager
+
+@if (!_currentUrl.Contains("gestion"))
 {
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand text-success logo h1 align-self-center" href="/">
-                Zay
+                @_shopName
             </a>
             <button class="navbar-toggler border-0 @NavButtonCssClass" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" @onclick="ToggleNavMenu">
@@ -57,12 +61,44 @@ else
 }
 
 @code {
-    [Parameter]
-    public string CurrentURL { get; set; }
+
+    [CascadingParameter(Name = "DataSwanShop")]
+    protected SwanShop? data { get; set; }   
 
     private bool collapseNavMenu = true;
     private string? NavBarCssClass => collapseNavMenu ? null : "show";
     private string? NavButtonCssClass => collapseNavMenu ? "collapsed" : null;
+
+    private string _currentUrl = string.Empty;
+
+    private string _shopName = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
+                        if (configShopName != null)
+                            _shopName = configShopName.Value;
+                    }
+                }
+            }
+
+            //StateHasChanged();
+        }
+    }
 
     private void ToggleNavMenu()
     {

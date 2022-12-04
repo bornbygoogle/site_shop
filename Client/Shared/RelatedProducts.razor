@@ -3,7 +3,7 @@
         <div class="row text-left p-2 pb-3">
             <h4>Related Products</h4>
         </div>
-        <BlazorSlickCarousel @ref="relatedProductsCarousel" Configurations="relatedProductsConfigurations" Id="carousel-related-product">
+        <BlazorSlickCarousel Configurations="relatedProductsConfigurations" Id="carousel-related-product" @ref="relatedProductsCarousel">
             <BlazorSlickCarouselContent>
                 <div class="p-2 pb-3">
                     <div class="product-wap card rounded-0">
@@ -197,8 +197,8 @@
 </section>
 
 @code {
-    public BlazorSlickCarousel relatedProductsCarousel;
-    public WMBSCInitialSettings relatedProductsConfigurations;
+    public BlazorSlickCarousel? relatedProductsCarousel;
+    public WMBSCInitialSettings? relatedProductsConfigurations;
 
     protected override void OnInitialized()
     {
@@ -246,6 +246,8 @@
                 autoplay = true,
                 touchMove = false
             };
+
+
     }
 }
 

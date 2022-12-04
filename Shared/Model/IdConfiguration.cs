@@ -5,7 +5,21 @@ namespace BlazorApp.Shared
 {
     public class IdConfiguration : BaseDto
     {
-        public string Id { get; set; }
+        private string _id;
+
+        public string Id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id != null && value != null && _id != value)
+                    this.HasChange = "1";
+
+                _id = value;
+            }
+        }
+
+
         public List<SiteProperty> Properties { get; set; }
 
         public IdConfiguration() { }
@@ -21,7 +35,7 @@ namespace BlazorApp.Shared
 
         public bool HasDataChanged()
         {
-            return Properties.Any(x => x.HasChange == "1");
+            return (this.HasChange == "1") || (Properties != null && Properties.Any(x => x.HasDataChanged()));
         }
     }
 }

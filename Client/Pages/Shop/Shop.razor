@@ -1,8 +1,12 @@
 ﻿@using MudBlazor;
+@using BlazorApp.Shared;
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 @page "/shop"
 
-<PageTitle>Shop</PageTitle>
+<PageTitle>@pageTitle</PageTitle>
 
 <!-- Start Content -->
 <div class="container py-5">
@@ -453,90 +457,33 @@
                     Lorem ipsum dolor sit amet.
                 </p>
             </div>
-            <div class="col-lg-9 m-auto tempaltemo-carousel">
-                <div class="row d-flex flex-row">
-                    <!--Controls-->
-                    <div class="col-1 align-self-center">
-                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
-                            <i class="text-light fas fa-chevron-left"></i>
-                        </a>
-                    </div>
-                    <!--End Controls-->
-                    <!--Carousel Wrapper-->
-                    <div class="col">
-                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
-                            <!--Slides-->
-                            <div class="carousel-inner product-links-wap" role="listbox">
 
-                                <!--First slide-->
-                                <div class="carousel-item active">
-                                    <div class="row">
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--End First slide-->
-                                <!--Second slide-->
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--End Second slide-->
-                                <!--Third slide-->
-                                <div class="carousel-item">
-                                    <div class="row">
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
-                                        </div>
-                                        <div class="col-3 p-md-5">
-                                            <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--End Third slide-->
-
-                            </div>
-                            <!--End Slides-->
+            <BlazorSlickCarousel Configurations="shopBrandsConfigurations" Id="multi-item-example" @ref="shopBrandsCarousel">
+                <BlazorSlickCarouselContent>
+                    <div class="col-3 p-md-5">
+                        <div class=product-links-wap card rounded-0">
+                            <img class="img-fluid brand-img" src="assets/img/brand_01.png">
                         </div>
                     </div>
-                    <!--End Carousel Wrapper-->
-                    <!--Controls-->
-                    <div class="col-1 align-self-center">
-                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
-                            <i class="text-light fas fa-chevron-right"></i>
-                        </a>
+                    <div class="col-3 p-md-5">
+                        <div class=product-links-wap card rounded-0">
+                            <img class="img-fluid brand-img" src="assets/img/brand_02.png">
+                        </div>
                     </div>
-                    <!--End Controls-->
-                </div>
-            </div>
+                    <div class="col-3 p-md-5">
+                        <div class=product-links-wap card rounded-0">
+                            <img class="img-fluid brand-img" src="assets/img/brand_03.png">
+                        </div>
+                    </div>
+                    <div class="col-3 p-md-5">
+                        <div class=product-links-wap card rounded-0">
+                            <img class="img-fluid brand-img" src="assets/img/brand_04.png">
+                        </div>
+                    </div>
+                </BlazorSlickCarouselContent>
+                <BlazorSlickCarouselLoading></BlazorSlickCarouselLoading>
+            </BlazorSlickCarousel>
+
         </div>
     </div>
 </section>
@@ -545,4 +492,105 @@
     bool _isGenderExpanded = false;
     bool _isSaleExpanded = false;
     bool _isProductExpanded = false;
+
+    [CascadingParameter(Name = "DataSwanShop")]
+    SwanShop? data { get; set; }
+
+    public BlazorSlickCarousel? shopBrandsCarousel;
+    public WMBSCInitialSettings? shopBrandsConfigurations;
+
+    private string pageTitle = string.Empty;
+    private bool _carouselShowDots = false;
+    private bool _carouselShowArrows = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
+            var shopConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route.ToLower() == currentUrl);
+            if (shopConfigs.Count() > 0)
+            {
+                foreach (var item in shopConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                        if (configPageTitle != null)
+                            pageTitle = configPageTitle.Value;
+                    }
+
+                    if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
+                    {
+                        var configCarousel = item.SpecificIdProperties.Where(x => x.Id == "multi-item-example").FirstOrDefault();
+                        if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
+                        {
+                            var valueShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault()?.Value ?? "0";
+                            _carouselShowArrows = valueShowArrows == "1" ? true : false;
+
+                            var valueShowDots = configCarousel.Properties.Where(x => x.Name == "ShowDots").FirstOrDefault()?.Value ?? "0";
+                            _carouselShowDots = valueShowDots == "1" ? true : false;
+                        }
+                    }
+                }
+
+                // Update the UI
+                //StateHasChanged();
+            }
+        }
+    }
+    protected override void OnInitialized()
+    {
+        // to <= 800px screen
+        WMBSCSettings breakpoint800Settings = new WMBSCSettings
+            {
+                slidesToShow = 2,
+                arrows = _carouselShowDots,
+                dots = _carouselShowArrows
+            };
+        WMBSCResponsiveSettings breakpoint800Responsive = new WMBSCResponsiveSettings
+            {
+                breakpoint = 800,
+                settings = breakpoint800Settings
+            };
+
+        // to <= 400px screen
+        WMBSCSettings breakpoint400Settings = new WMBSCSettings
+            {
+                slidesToShow = 1,
+                arrows = _carouselShowArrows
+            };
+        WMBSCResponsiveSettings breakpoint400Responsive = new WMBSCResponsiveSettings
+            {
+                breakpoint = 400,
+                settings = breakpoint400Settings
+            };
+
+        // add responsivity
+        List<WMBSCResponsiveSettings> responsiveSettingsList = new List<WMBSCResponsiveSettings>();
+        responsiveSettingsList.Add(breakpoint800Responsive);
+        responsiveSettingsList.Add(breakpoint400Responsive);
+
+        // the carousel configurations
+        shopBrandsConfigurations = new WMBSCInitialSettings
+            {
+                arrows = _carouselShowArrows,
+                dots = _carouselShowDots,
+                slidesToShow = 3,
+                slidesToScroll = 3,
+                infinite = true,
+                responsive = responsiveSettingsList,
+                centerMode = true,
+                adaptiveHeight = true,
+                autoplay = true,
+                touchMove = false
+            };
+
+
+    }
 }

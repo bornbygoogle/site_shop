@@ -6,9 +6,9 @@
 
 @if (data != null)
 {
-    <PageTitle>@dataPageTitle</PageTitle>
+    <PageTitle>@pageTitle</PageTitle>
 
-    <Banner Data="@data"></Banner>
+    <Banner></Banner>
 
     <MonthCategories></MonthCategories>
 
@@ -20,16 +20,23 @@
     private bool ShowErrors;
     private string Error = "";
 
-    private SwanShop data { get; set; }
-    private string dataPageTitle = string.Empty;
+    [CascadingParameter(Name = "DataSwanShop")]
+    protected SwanShop? data { get; set; }
+
+    private string pageTitle = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
+        //data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
 
+        //var test = data;
+    }
+
+    protected override void OnParametersSet()
+    {
         if (data != null && data.Configs != null && data.Configs.Count > 0)
         {
-            var indexConfigs = data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
             if (indexConfigs.Count() > 0)
             {
                 foreach (var item in indexConfigs)
@@ -38,13 +45,32 @@
                     {
                         var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                         if (configPageTitle != null)
-                            dataPageTitle = configPageTitle.Value;
+                            pageTitle = configPageTitle.Value;
                     }
                 }
             }
 
-            // Update the UI
-            StateHasChanged();
+            //StateHasChanged();
         }
+    }
+
+    protected override async void OnInitialized()
+    {
+        //if (data != null && data.Configs != null && data.Configs.Count > 0)
+        //{
+        //    var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
+        //    if (indexConfigs.Count() > 0)
+        //    {
+        //        foreach (var item in indexConfigs)
+        //        {
+        //            if (item.Properties != null && item.Properties.Count > 0)
+        //            {
+        //                var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+        //                if (configPageTitle != null)
+        //                    pageTitle = configPageTitle.Value;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

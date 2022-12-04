@@ -11,7 +11,7 @@ namespace BlazorApp.Api
     {
         public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr";
         //public static string URL_SERVER_SITE_MANAGER_2 = "https://sitemanager.hjb0crb4bmcuawhh.northeurope.azurecontainer.io";
-        public static string URL_DEV = "https://localhost:7132";
+        public static string URL_DEV = "https://localhost:7083";
         public const bool USE_LOCAL_SERVER = false;
 
         private static HttpClient _httpClient;

@@ -8,13 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Shop\Contact.razor~RF3c3e2f68.TMP" />
+    <None Remove="Shared\MainLayout.razor~RF406ee694.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Blazored.Modal" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.11" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="6.1.2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
     <PackageReference Include="System.Text.Json" Version="7.0.0" />
     <PackageReference Include="WMBlazorSlickCarousel" Version="1.0.1" />
   </ItemGroup>

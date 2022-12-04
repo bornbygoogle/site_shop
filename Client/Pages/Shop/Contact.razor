@@ -1,7 +1,11 @@
-﻿@page "/contact"
+﻿@using BlazorApp.Shared;
 
-<PageTitle>Contact</PageTitle>
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
+@page "/contact"
+
+<PageTitle>@pageTitle</PageTitle>
 
 <!-- Start Content Page -->
 <div class="container-fluid bg-light py-5">
@@ -45,3 +49,43 @@
     </div>
 </div>
 <!-- End Contact -->
+
+@code
+{
+    private bool ShowErrors;
+    private string Error = "";
+
+    [CascadingParameter(Name = "DataSwanShop")]
+    private SwanShop? data { get; set; }
+
+    private string pageTitle = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    protected override void OnInitialized()
+    {
+        if (data != null && data.Configs != null && data.Configs.Count > 0)
+        {
+            var currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
+            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route.ToLower() == currentUrl);
+            if (indexConfigs.Count() > 0)
+            {
+                foreach (var item in indexConfigs)
+                {
+                    if (item.Properties != null && item.Properties.Count > 0)
+                    {
+                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                        if (configPageTitle != null)
+                            pageTitle = configPageTitle.Value;
+                    }
+                }
+            }
+
+            // Update the UI
+            StateHasChanged();
+        }
+    }
+}

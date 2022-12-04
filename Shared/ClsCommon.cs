@@ -147,5 +147,7 @@ namespace BlazorApp.Shared
 
             return valid;
         }
+
+
     }
 }
