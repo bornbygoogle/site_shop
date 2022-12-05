@@ -1,9 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using BlazorApp.Shared;
+using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace BlazorApp.Api
 {
@@ -12,7 +17,7 @@ namespace BlazorApp.Api
         public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr";
         //public static string URL_SERVER_SITE_MANAGER_2 = "https://sitemanager.hjb0crb4bmcuawhh.northeurope.azurecontainer.io";
         public static string URL_DEV = "https://localhost:7083";
-        public const bool USE_LOCAL_SERVER = false;
+        public const bool USE_LOCAL_SERVER = true;
 
         private static HttpClient _httpClient;
 

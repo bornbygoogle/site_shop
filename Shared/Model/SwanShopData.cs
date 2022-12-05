@@ -13,6 +13,8 @@ namespace BlazorApp.Shared
         private string _subTitle;
         private string _text;
         private decimal? _price;
+        private string _categorie;
+        private string _isMonthCategorie;
 
         public string Route
         {
@@ -103,6 +105,29 @@ namespace BlazorApp.Shared
                     this.HasChange = "1";
 
                 _price = value;
+            }
+        }
+        public string Categorie
+        {
+            get { return _categorie; }
+            set
+            {
+                if (_categorie != null && value != null && _categorie != value)
+                    this.HasChange = "1";
+
+                _categorie = value;
+            }
+        }
+
+        public string IsMonthCategorie
+        {
+            get { return _isMonthCategorie; }
+            set
+            {
+                if (_isMonthCategorie != null && value != null && _isMonthCategorie != value)
+                    this.HasChange = "1";
+
+                _isMonthCategorie = value;
             }
         }
 

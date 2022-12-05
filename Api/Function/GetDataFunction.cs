@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace BlazorApp.Api.Function
 {
@@ -14,9 +15,15 @@ namespace BlazorApp.Api.Function
         {
             var sUrl = $"{ApiCommon.GetUrlServer()}/SwanShop/GetDataSwanShop";
 
-            var response = ApiCommon.ExecuteHttpGet<SwanShop>(sUrl);
-            if (response != null)
-                return new OkObjectResult(response);
+            var bResponse = ApiCommon.ExecuteHttpGet<byte[]>(sUrl);
+            
+            SwanShop shopData = null;
+
+            if (bResponse != null && bResponse.Length > 0 && ClsUtil.ByteArrayToStringUnzipIfNedeed(bResponse, System.Text.Encoding.UTF8, out string response, out string msgErr) && !string.IsNullOrEmpty(response) && string.IsNullOrEmpty(msgErr))
+                 shopData = JsonConvert.DeserializeObject<SwanShop>(response);
+
+            if (shopData != null)
+                return new OkObjectResult(shopData);
             else
                 return new BadRequestObjectResult(string.Empty);
         }

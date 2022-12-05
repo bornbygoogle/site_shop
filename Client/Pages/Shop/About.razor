@@ -5,18 +5,14 @@
 
 @page "/about"
 
-<PageTitle>@pageTitle</PageTitle>
+<PageTitle>@_pageTitle</PageTitle>
 
 <section class="bg-success py-5">
     <div class="container">
         <div class="row align-items-center py-5">
             <div class="col-md-8 text-white">
                 <h1>About Us</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                <p>@_summary</p>
             </div>
             <div class="col-md-4">
                 <img src="assets/img/about-hero.svg" alt="About Hero">
@@ -119,7 +115,8 @@
     [CascadingParameter(Name = "DataSwanShop")]
     private SwanShop? data { get; set; }
 
-    private string pageTitle = string.Empty;
+    private string _pageTitle = string.Empty;
+    private string _summary = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -141,7 +138,11 @@
                     {
                         var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                         if (configPageTitle != null)
-                            pageTitle = configPageTitle.Value;
+                            _pageTitle = configPageTitle.Value;
+
+                        var configSummary = item.Properties.Where(x => x.Name == "Summary").FirstOrDefault();
+                        if (configSummary != null)
+                            _summary = configSummary.Value;
                     }
                 }
             }
