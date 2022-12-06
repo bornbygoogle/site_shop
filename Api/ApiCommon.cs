@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace BlazorApp.Api
@@ -189,24 +190,31 @@ namespace BlazorApp.Api
             var nbr = 0;
             string result = string.Empty;
 
+
             try
             {
                 do
                 {
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
                     try
                     {
                         var httpClient = GetHttpClient(accessToken);
 
-                        var res = httpClient.PostAsync(sUrl, new StringContent(Serialize(oObject), Encoding.UTF8, "application/json")).Result;
+                        result = PostStreamAsync(httpClient, sUrl, oObject, cancellationTokenSource).Result;
 
-                        res.EnsureSuccessStatusCode();
+                        //var res = httpClient.PostAsync(sUrl, new StringContent(Serialize(oObject), Encoding.UTF8, "application/json")).Result;
+
+                        //res.EnsureSuccessStatusCode();
+
+                        //result = res.Content.ReadAsStringAsync().Result;
 
                         nbr = 11;
-
-                        result = res.Content.ReadAsStringAsync().Result;
                     }
                     catch (Exception e)
                     {
+                        cancellationTokenSource.Cancel();
+
                         if (nbr >= 10)
                             throw;
                     }
@@ -223,6 +231,64 @@ namespace BlazorApp.Api
             }
 
             return result;
+        }
+
+        private static async Task<string> PostStreamAsync(HttpClient client, string url, object content, CancellationTokenSource cancellationTokenSource)
+        {
+            string result = string.Empty;
+
+            using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+            using (var httpContent = CreateHttpContent(content))
+            {
+                request.Content = httpContent;
+
+                using (var response = await client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token)
+                    .ConfigureAwait(false))
+                {
+                    response.EnsureSuccessStatusCode();
+
+                    result = response.Content.ReadAsStringAsync().Result;
+                }
+            }
+
+            return result;
+        }
+
+        private static HttpContent CreateHttpContent(object content)
+        {
+            HttpContent httpContent = null;
+
+            if (content != null)
+            {
+                var ms = new MemoryStream();
+                SerializeJsonIntoStream(content, ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                httpContent = new StreamContent(ms);
+                httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            }
+
+            return httpContent;
+        }
+
+        public static void SerializeJsonIntoStream(object value, Stream stream)
+        {
+            if (value != null)
+            {
+                var sData = JsonConvert.SerializeObject(value);
+                ClsUtil.StringToByteArrayZip(sData, System.Text.Encoding.UTF8, out byte[] bData, out string msgErr);
+
+                if (bData != null && bData.Length > 0 && string.IsNullOrEmpty(msgErr))
+                {
+                    using (var sw = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
+                    using (var jtw = new JsonTextWriter(sw) { Formatting = Formatting.None })
+                    {
+                        var js = new JsonSerializer();
+                        js.Serialize(jtw, bData);
+                        jtw.Flush();
+                    }
+                }
+            }
         }
 
         public static string Serialize(object oObject, bool ignoreNullOrDefault = true)
