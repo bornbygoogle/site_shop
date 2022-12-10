@@ -148,6 +148,16 @@ namespace BlazorApp.Shared
             return valid;
         }
 
+        public static string GetPropertyValue(List<SiteProperty> listProperties, string propertyName)
+        {
+            if (listProperties == null)
+                return null;
 
+            var itemProperty = listProperties.Where(x => x.Name == propertyName).FirstOrDefault();
+            if (itemProperty != null)
+                return itemProperty.Value;
+            else
+                return null;
+        }
     }
 }

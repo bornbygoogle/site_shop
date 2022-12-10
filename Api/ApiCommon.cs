@@ -18,7 +18,7 @@ namespace BlazorApp.Api
         public static string URL_SERVER_SITE_MANAGER = "http://site-manager.minhan-tran.fr";
         //public static string URL_SERVER_SITE_MANAGER_2 = "https://sitemanager.hjb0crb4bmcuawhh.northeurope.azurecontainer.io";
         public static string URL_DEV = "https://localhost:7083";
-        public const bool USE_LOCAL_SERVER = true;
+        public const bool USE_LOCAL_SERVER = false;
 
         private static HttpClient _httpClient;
 
@@ -102,6 +102,45 @@ namespace BlazorApp.Api
             return result;
         }
 
+        public static byte[] ExecuteHttpGetByteArray(string sUrl)
+        {
+            var nbr = 0;
+            byte[] result = null;
+
+            try
+            {
+                do
+                {
+                    try
+                    {
+                        var res = GetHttpClient().GetAsync(sUrl).Result;
+
+                        res.EnsureSuccessStatusCode();
+
+                        nbr = 11;
+
+                        result = res.Content.ReadAsByteArrayAsync().Result;
+                    }
+                    catch (Exception e)
+                    {
+                        if (nbr >= 10)
+                            throw;
+                    }
+
+                    Thread.Sleep(1000);
+
+                    nbr++;
+                }
+                while (nbr < 10);
+            }
+            catch
+            {
+                /*var res = GetHttpClient().GetAsync("https://black-bay-0e87ebf03.1.azurestaticapps.net/").Result;*/
+            }
+
+            return result;
+        }
+
         public static T ExecuteHttpGet<T>(string sUrl)
         {
             var nbr = 0;
@@ -118,7 +157,7 @@ namespace BlazorApp.Api
                         res.EnsureSuccessStatusCode();
 
                         nbr = 11;
-
+                        
                         result = res.Content.ReadFromJsonAsync<T>().Result;
                     }
                     catch (Exception e)

@@ -19,83 +19,198 @@
     <InputText Id="logo" Class="form-control" @bind-Value="general.Logo" />
     <ValidationMessage For="@(() => general.Logo)" />
     </div>*@
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="title">Index / Page title</label></h5>
-        <InputText Id="index-title" Class="form-control" @bind-Value="indexPageTitle" />
+
+    <h4>Index / Infos</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-title">Page title</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-title" Class="form-control" @bind-Value="indexPageTitle" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-name">Shop name</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-shopName" Class="form-control" @bind-Value="_shopName" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-adress">Address</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="lb-index-shopAdress" Class="form-control" @bind-Value="_shopAddress" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-telephone">Telephone</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-shopTelephone" Class="form-control" @bind-Value="_shopTelephone" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-email">Mail</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-shopMail" Class="form-control" @bind-Value="_shopMail" />
+        </div>
+        <div class="col-1"></div>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopName">Index / Shop name</label></h5>
-        <InputText Id="index-shopName" Class="form-control" @bind-Value="_shopName" />
+    <h4>Index / Social media link</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-linkfb">Facebook</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-linkfb" Class="form-control" @bind-Value="_shopLinkFacebook" />
+        </div>
+        <div class="col-1"></div>
     </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopAddress">Index / Address</label></h5>
-        <InputText Id="index-shopAddress" Class="form-control" @bind-Value="_shopAddress" />
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-linkig">Instagram</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-linkig" Class="form-control" @bind-Value="_shopLinkInstagram" />
+        </div>
+        <div class="col-1"></div>
     </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopTelephone">Index / Telephone</label></h5>
-        <InputText Id="index-shopTelephone" Class="form-control" @bind-Value="_shopTelephone" />
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-linktw">Twitter</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-linktw" Class="form-control" @bind-Value="_shopLinkTwitter" />
+        </div>
+        <div class="col-1"></div>
     </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopMail">Index / Mail</label></h5>
-        <InputText Id="index-shopMail" Class="form-control" @bind-Value="_shopMail" />
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopLinkFacebook">Index / Link Facebook</label></h5>
-        <InputText Id="index-linkfb" Class="form-control" @bind-Value="_shopLinkFacebook" />
-    </div>
-        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopLinkInstagram">Index / Link Instagram</label></h5>
-        <InputText Id="index-linkig" Class="form-control" @bind-Value="_shopLinkInstagram" />
-    </div>
-        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopLinkTwitter">Index / Link Twitter</label></h5>
-        <InputText Id="index-linktw" Class="form-control" @bind-Value="_shopLinkTwitter" />
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="shopLinkLinkedIn">Index / Link LinkedIn</label></h5>
-        <InputText Id="index-linkli" Class="form-control" @bind-Value="_shopLinkLinkedIn" />
-    </div>
-
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="carouselStyle">Carousel style</label></h5>
-        <InputText Id="index-carouselStyle" Class="form-control" @bind-Value="_carouselStyle" />
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="carouselShowArrows">Carousel ShowArrows</label></h5>
-        <InputCheckbox Id="index-carouselShowArrows" @bind-Value="_carouselShowArrows"></InputCheckbox>
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="carouselShowBullets">Carousel ShowBullets</label></h5>
-        <InputCheckbox Id="index-carouselShowBullets" @bind-Value="_carouselShowBullets"></InputCheckbox>
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="carouselEnableSwipeGesture">Carousel EnableSwipeGesture</label></h5>
-        <InputCheckbox Id="index-carouselEnableSwipeGesture" @bind-Value="_carouselEnableSwipeGesture"></InputCheckbox>
-    </div>
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="carouselAutoCycle">Carousel AutoCycle</label></h5>
-        <InputCheckbox Id="index-carouselAutoCycle" @bind-Value="_carouselAutoCycle"></InputCheckbox>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-linkli">LinkedIn</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-linkli" Class="form-control" @bind-Value="_shopLinkLinkedIn" />
+        </div>
+        <div class="col-1"></div>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="title">About / Page title</label></h5>
-        <InputText Id="index-title" Class="form-control" @bind-Value="aboutPageTitle" />
+    <h4>Index / Carousel (style + options)</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-index-carousel-style">Style</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="index-carousel-style" Class="form-control" @bind-Value="_carouselStyle" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-end">
+            <label for="lb-index-carousel-show-arrows">Show Arrows</label>
+        </div>
+        <div class="col-1 d-block d-inline align-self-center text-left">
+            <InputCheckbox Id="index-carouselShowArrows" @bind-Value="_carouselShowArrows"></InputCheckbox>
+        </div>
+        <div class="col-2 d-block d-inline align-self-center text-end">
+            <label for="lb-index-carousel-show-bullets">Show Bullets</label>
+        </div>
+        <div class="col-1 d-block d-inline align-self-center text-left">
+            <InputCheckbox Id="index-carouselShowBullets" @bind-Value="_carouselShowBullets"></InputCheckbox>
+        </div>
+        <div class="col-2 d-block d-inline align-self-center text-end">
+            <label for="lb-index-carousel-enable-swipe-gesture">Enable Swipe Gesture</label>
+        </div>
+        <div class="col-1 d-block d-inline align-self-center text-left">
+            <InputCheckbox Id="index-carouselEnableSwipeGesture" @bind-Value="_carouselEnableSwipeGesture"></InputCheckbox>
+        </div>
+        <div class="col-2 d-block d-inline align-self-center text-end">
+            <label for="lb-index-carousel-auto-cycle">Auto Cycle</label>
+        </div>
+        <div class="col-1 d-block d-inline align-self-center text-left">
+            <InputCheckbox Id="index-carouselAutoCycle" @bind-Value="_carouselAutoCycle"></InputCheckbox>
+        </div>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="title">Contact / Page title</label></h5>
-        <InputText Id="index-title" Class="form-control" @bind-Value="contactPageTitle" />
+    <h4>About / Infos</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-about-title">Page title</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="about-title" Class="form-control" @bind-Value="_aboutPageTitle" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-about-summary">Summary</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputTextArea Id="about-summary" Class="form-control" @bind-Value="_aboutSummary" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-about-service-summary">Service Summary</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputTextArea Id="about-service-summary" Class="form-control" @bind-Value="_aboutServiceSummary" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-about-brands-summary">Brands Summary</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputTextArea Id="about-brands-summary" Class="form-control" @bind-Value="_aboutBrandsSummary" />
+        </div>
+        <div class="col-1"></div>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="title">ShopSingle / Page title</label></h5>
-        <InputText Id="index-title" Class="form-control" @bind-Value="shopSinglePageTitle" />
+    <h4>Contact / Infos</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-contact-title">Page title</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="contact-title" Class="form-control" @bind-Value="contactPageTitle" />
+        </div>
+        <div class="col-1"></div>
     </div>
 
-    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-        <h5><label for="title">Shop / Page title</label></h5>
-        <InputText Id="index-title" Class="form-control" @bind-Value="shopPageTitle" />
+    <h4>Shop / Infos</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-title">Page title</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="shop-title" Class="form-control" @bind-Value="shopPageTitle" />
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <h4>Shop single / Infos</h4>
+    <div class="col-lg-12 col-md-12 col-sm-12 row m-1">
+        <div class="col-2 d-block d-inline align-self-center text-center">
+            <label for="lb-shop-single-title">Page title</label>
+        </div>
+        <div class="col-9 d-block d-inline">
+            <InputText Id="shop-single-title" Class="form-control" @bind-Value="shopSinglePageTitle" />
+        </div>
+        <div class="col-1"></div>
     </div>
 
     @*</div>*@
@@ -291,7 +406,11 @@
     private string _shopLinkLinkedIn = string.Empty;
 
 
-    private string aboutPageTitle = string.Empty;
+    private string _aboutPageTitle = string.Empty;
+    private string _aboutSummary = string.Empty;
+    private string _aboutServiceSummary = string.Empty;
+    private string _aboutBrandsSummary = string.Empty;
+
     private string contactPageTitle = string.Empty;
     private string shopPageTitle = string.Empty;
     private string shopSinglePageTitle = string.Empty;
@@ -354,7 +473,26 @@
                                 {
                                     var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                                     if (configPageTitle != null)
-                                        aboutPageTitle = configPageTitle.Value;
+                                        _aboutPageTitle = configPageTitle.Value;
+
+                                    var configSummary = item.Properties.Where(x => x.Name == "Summary").FirstOrDefault();
+                                    if (configSummary != null)
+                                        _aboutSummary = configSummary.Value;
+                                }
+
+                                if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
+                                {
+                                    var configServiceSummary = item.SpecificIdProperties.Where(x => x.Id == "summary-service").FirstOrDefault();
+                                    if (configServiceSummary != null && configServiceSummary.Properties != null && configServiceSummary.Properties.Count() > 0)
+                                    {
+                                        _aboutServiceSummary = ClsCommon.GetPropertyValue(configServiceSummary.Properties, "Summary");
+                                    }
+
+                                    var configBrandsSummary = item.SpecificIdProperties.Where(x => x.Id == "summary-brands").FirstOrDefault();
+                                    if (configBrandsSummary != null && configBrandsSummary.Properties != null && configBrandsSummary.Properties.Count() > 0)
+                                    {
+                                        _aboutBrandsSummary = ClsCommon.GetPropertyValue(configBrandsSummary.Properties, "Summary");
+                                    }
                                 }
 
                                 break;
@@ -404,11 +542,12 @@
                                     var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
                                     if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
                                     {
-                                        _carouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault().Value ?? string.Empty;
-                                        _carouselShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault().Value == "1";
-                                        _carouselShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault().Value == "1";
-                                        _carouselEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault().Value == "1";
-                                        _carouselAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault().Value == "1";
+                                        _carouselStyle = ClsCommon.GetPropertyValue(configCarousel.Properties, "Style");
+
+                                        _carouselShowArrows = ClsCommon.GetPropertyValue(configCarousel.Properties, "ShowArrows") == "1";
+                                        _carouselShowBullets = ClsCommon.GetPropertyValue(configCarousel.Properties, "ShowBullets") == "1";
+                                        _carouselEnableSwipeGesture = ClsCommon.GetPropertyValue(configCarousel.Properties, "EnableSwipeGesture") == "1";
+                                        _carouselAutoCycle = ClsCommon.GetPropertyValue(configCarousel.Properties, "ShoAutoCyclewBullets") == "1";
                                     }
                                 }
 
@@ -542,7 +681,7 @@
                 }
             }
 
-            if (!string.IsNullOrEmpty(aboutPageTitle))
+            if (!string.IsNullOrEmpty(_aboutPageTitle))
             {
                 var aboutConfigs = dataSwanShop.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "About");
                 if (aboutConfigs.Count() > 0)
@@ -553,9 +692,21 @@
                         {
                             var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                             if (configPageTitle != null)
+                                configPageTitle.Value = _aboutPageTitle;
+
+                            var configSummary = item.Properties.Where(x => x.Name == "Summary").FirstOrDefault();
+                            if (configSummary != null)
+                                configSummary.Value = _aboutSummary;
+                        }
+
+                        if (item.SpecificIdProperties != null)
+                        {
+                            var configSummaryService = item.SpecificIdProperties.Where(x => x.Id == "summary-service").FirstOrDefault();
+                            if (configSummaryService != null && configSummaryService.Properties != null && configSummaryService.Properties.Count() > 0)
                             {
-                                configPageTitle.Value = aboutPageTitle;
-                                configPageTitle.HasChange = "1";
+                                var configServiceSummary = configSummaryService.Properties.Where(x => x.Name == "Summary").FirstOrDefault();
+                                if (configServiceSummary != null)
+                                    configServiceSummary.Value = _aboutServiceSummary;
                             }
                         }
                     }
@@ -573,10 +724,7 @@
                         {
                             var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                             if (configPageTitle != null)
-                            {
                                 configPageTitle.Value = contactPageTitle;
-                                configPageTitle.HasChange = "1";
-                            }
                         }
                     }
                 }
@@ -593,10 +741,7 @@
                         {
                             var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                             if (configPageTitle != null)
-                            {
                                 configPageTitle.Value = shopPageTitle;
-                                configPageTitle.HasChange = "1";
-                            }
                         }
                     }
                 }
@@ -613,10 +758,7 @@
                         {
                             var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
                             if (configPageTitle != null)
-                            {
                                 configPageTitle.Value = shopSinglePageTitle;
-                                configPageTitle.HasChange = "1";
-                            }
                         }
                     }
                 }

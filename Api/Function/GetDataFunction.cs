@@ -15,7 +15,7 @@ namespace BlazorApp.Api.Function
         {
             var sUrl = $"{ApiCommon.GetUrlServer()}/SwanShop/GetDataSwanShop";
 
-            var bResponse = ApiCommon.ExecuteHttpGet<byte[]>(sUrl);
+            var bResponse = ApiCommon.ExecuteHttpGetByteArray(sUrl);
             
             SwanShop shopData = null;
 
