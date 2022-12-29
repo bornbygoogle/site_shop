@@ -11,9 +11,6 @@
             get { return _name; }
             set
             {
-                if (_name != null && value != null && _name != value)
-                    this.HasChange = "1";
-
                 _name = value;
             }
         }
@@ -22,9 +19,6 @@
             get { return _value; }
             set
             {
-                if (_value != null && value != null && _value != value)
-                    this.HasChange = "1";
-
                 _value = value;
             }
         }

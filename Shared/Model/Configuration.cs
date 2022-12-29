@@ -12,9 +12,6 @@ namespace BlazorApp.Shared
             get { return _route; }
             set
             {
-                if (_route != null && value != null && _route != value)
-                    this.HasChange = "1";
-
                 _route = value;
             }
         }

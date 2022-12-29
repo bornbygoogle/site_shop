@@ -1,15 +1,14 @@
-﻿using BlazorApp.Shared;
+﻿using BlazorApp.Api.Function;
+using BlazorApp.Shared;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace BlazorApp.Api
 {
@@ -21,20 +20,6 @@ namespace BlazorApp.Api
         public const bool USE_LOCAL_SERVER = false;
 
         private static HttpClient _httpClient;
-
-        //public static List<LogInfoItemDto> GetLogs(string sMethod, string accType, string accHolder, string symbol = null)
-        //{
-        //    List<LogInfoItemDto> listSymbol = new List<LogInfoItemDto>();
-
-        //    string sUrl = $"{ClsCommon.URL_SERVER}/Server/{sMethod}?accType={accType}&accHolder={accHolder}";
-
-        //    if (!string.IsNullOrEmpty(symbol))
-        //        sUrl += $"&symbol={symbol}";
-
-        //    listSymbol = ExecuteHttpGet<List<LogInfoItemDto>>(sUrl);
-
-        //    return listSymbol;
-        //}
 
         public static string GetUrlServer()
         {
@@ -119,15 +104,15 @@ namespace BlazorApp.Api
 
                         nbr = 11;
 
-                        result = res.Content.ReadAsByteArrayAsync().Result;
+                        result = res.Content.ReadAsAsync<byte[]>().Result;
                     }
                     catch (Exception e)
                     {
                         if (nbr >= 10)
                             throw;
-                    }
 
-                    Thread.Sleep(1000);
+                        Thread.Sleep(1000);
+                    }
 
                     nbr++;
                 }
@@ -242,12 +227,6 @@ namespace BlazorApp.Api
 
                         result = PostStreamAsync(httpClient, sUrl, oObject, cancellationTokenSource).Result;
 
-                        //var res = httpClient.PostAsync(sUrl, new StringContent(Serialize(oObject), Encoding.UTF8, "application/json")).Result;
-
-                        //res.EnsureSuccessStatusCode();
-
-                        //result = res.Content.ReadAsStringAsync().Result;
-
                         nbr = 11;
                     }
                     catch (Exception e)
@@ -281,14 +260,11 @@ namespace BlazorApp.Api
             {
                 request.Content = httpContent;
 
-                using (var response = await client
-                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token)
-                    .ConfigureAwait(false))
-                {
-                    response.EnsureSuccessStatusCode();
+                var response = client.SendAsync(request, cancellationTokenSource.Token).Result;
 
-                    result = response.Content.ReadAsStringAsync().Result;
-                }
+                response.EnsureSuccessStatusCode();
+
+                result = response.Content.ReadAsStringAsync().Result;
             }
 
             return result;
@@ -304,7 +280,10 @@ namespace BlazorApp.Api
                 SerializeJsonIntoStream(content, ms);
                 ms.Seek(0, SeekOrigin.Begin);
                 httpContent = new StreamContent(ms);
+
                 httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                //httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                //httpContent.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
             }
 
             return httpContent;
@@ -315,15 +294,22 @@ namespace BlazorApp.Api
             if (value != null)
             {
                 var sData = JsonConvert.SerializeObject(value);
+
+                sData = sData.ToBrotliAsync(System.IO.Compression.CompressionLevel.Optimal).Result.Result.Value;
+
                 ClsUtil.StringToByteArrayZip(sData, System.Text.Encoding.UTF8, out byte[] bData, out string msgErr);
 
                 if (bData != null && bData.Length > 0 && string.IsNullOrEmpty(msgErr))
                 {
+                    var sContent = Convert.ToBase64String(bData);
+
+                    Console.WriteLine(sContent.Substring(0, 5));
+
                     using (var sw = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
                     using (var jtw = new JsonTextWriter(sw) { Formatting = Formatting.None })
                     {
                         var js = new JsonSerializer();
-                        js.Serialize(jtw, bData);
+                        js.Serialize(jtw, sContent);
                         jtw.Flush();
                     }
                 }

@@ -25,7 +25,7 @@ namespace BlazorApp.Shared
                 byte[] publickeybyte = Encoding.UTF8.GetBytes(Resources.CrypPublicKey);
                 MemoryStream ms = null;
                 CryptoStream cs = null;
-                byte[] inputbyteArray = System.Text.Encoding.UTF8.GetBytes(textToEncrypt);
+                byte[] inputbyteArray = System.Text.Encoding.ASCII.GetBytes(textToEncrypt);
                 using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
                 {
                     ms = new MemoryStream();

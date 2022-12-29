@@ -12,9 +12,6 @@ namespace BlazorApp.Shared
             get { return _id; }
             set
             {
-                if (_id != null && value != null && _id != value)
-                    this.HasChange = "1";
-
                 _id = value;
             }
         }

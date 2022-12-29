@@ -5,129 +5,58 @@ namespace BlazorApp.Shared
 {
     public class SwanShopData : BaseDto
     {
-        private string _route;
-        private string _idInsideRoute;
+        private long? _id;
+
+        private long? _articleId;
+
+        private string _type;
+
         private string _imageUrl;
+
         private byte[] _imageBlob;
-        private string _title;
-        private string _subTitle;
-        private string _text;
-        private decimal? _price;
-        private string _categorie;
-        private string _isMonthCategorie;
 
-        public string Route
+        public long? Id
         {
-            get { return _route; }
+            get { return _id; }
             set
             {
-                if (_route != null && value != null && _route != value)
-                    this.HasChange = "1";
-
-                _route = value;
+                _id = value;
             }
         }
-        public string IdInsideRoute
+
+        public string Type
         {
-            get
-            {
-                return _idInsideRoute;
-            }
+            get { return _type; }
             set
             {
-                if (_idInsideRoute != null && value != null && _idInsideRoute != value)
-                    this.HasChange = "1";
-
-                _idInsideRoute = value;
+                _type = value;
             }
         }
+
         public string ImageUrl
         {
             get { return _imageUrl; }
             set
             {
-                if (_imageUrl != null && value != null && _imageUrl != value)
-                    this.HasChange = "1";
-
                 _imageUrl = value;
             }
         }
+
         public byte[] ImageBlob
         {
             get { return _imageBlob; }
             set
             {
-                if (_imageBlob != null && value != null && _imageBlob != value)
-                    this.HasChange = "1";
-
                 _imageBlob = value;
             }
         }
-        public string Title
+
+        public long? ArticleId
         {
-            get { return _title; }
+            get { return _articleId; }
             set
             {
-                if (_title != null && value != null && _title != value)
-                    this.HasChange = "1";
-
-                _title = value;
-            }
-        }
-        public string SubTitle
-        {
-            get { return _subTitle; }
-            set
-            {
-                if (_subTitle != null && value != null && _subTitle != value)
-                    this.HasChange = "1";
-
-                _subTitle = value;
-            }
-        }
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (_text != null && value != null && _text != value)
-                    this.HasChange = "1";
-
-                _text = value;
-            }
-        }
-        public decimal? Price
-        {
-            get { return _price; }
-            set
-            {
-                if (_price != null && value != null && _price != value)
-                    this.HasChange = "1";
-
-                _price = value;
-            }
-        }
-        public string Categorie
-        {
-            get { return _categorie; }
-            set
-            {
-                if (_categorie != null && value != null && _categorie != value)
-                    this.HasChange = "1";
-
-                _categorie = value;
-            }
-        }
-
-        public string IsMonthCategorie
-        {
-            get { return _isMonthCategorie; }
-            set
-            {
-                if (_isMonthCategorie != null && value != null && _isMonthCategorie != value)
-                    this.HasChange = "1";
-
-                _isMonthCategorie = value;
+                _articleId = value;
             }
         }
 
@@ -143,7 +72,7 @@ namespace BlazorApp.Shared
 
         public bool HasDataChanged()
         {
-            return this.HasChange == "1";
+            return HasChange == "1";
         }
     }
 }

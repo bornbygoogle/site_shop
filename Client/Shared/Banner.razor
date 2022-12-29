@@ -91,7 +91,7 @@
         //Data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
         if (Data != null && Data.Configs != null && Data.Configs.Count > 0)
         {
-            var indexConfigs = Data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route.ToLower() == "Index");
+            var indexConfigs = Data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route == "Index");
             if (indexConfigs.Count() > 0)
             {
                 foreach (var item in indexConfigs)

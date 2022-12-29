@@ -331,7 +331,7 @@ namespace BlazorApp.Shared
             return bResult;
         }
 
-        public static bool ByteArrayToStringUnzipIfNedeed(byte[] aZip, Encoding encoding, out string sString, out string sMsgErr)
+        public static bool ByteArrayToStringUnzipIfNeeded(byte[] aZip, Encoding encoding, out string sString, out string sMsgErr)
         {
             sMsgErr = null;
 
