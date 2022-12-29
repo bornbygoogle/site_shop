@@ -21,7 +21,8 @@
                 foreach (var itemCategorie in data.Categories)
                 {
                     <MudNavMenu Class="templatemo-accordion">
-                        <MudNavGroup Title="@itemCategorie.Name" ExpandedChanged="(() => ExpandedCategorie(itemCategorie.Name))" Class="bg-white justify-content-between h3 text-decoration-none pull-right fa fa-fw fa-chevron-circle-down mt-1">
+                        <MudNavGroup Title="@itemCategorie.Name" ExpandedChanged="(() => ExpandedCategorie(itemCategorie.Name))" 
+                            Class="bg-white justify-content-between h3 text-decoration-none pull-right fa fa-fw fa-chevron-circle-down mt-1">
 
                             @{
                                 List<SwanShopSubCategorie> listSubCategories = null;

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\index.html~RF9fb6517.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Pages\Gestion\Gestion.razor~RF10a31baa.TMP" />
     <None Remove="Pages\Shop\Contact.razor~RF3c3e2f68.TMP" />
     <None Remove="Shared\gjhuz2fv.y3b~" />
