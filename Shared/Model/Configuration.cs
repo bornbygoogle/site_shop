@@ -5,9 +5,23 @@ namespace BlazorApp.Shared
 {
     public class Configuration : BaseDto
     {
+        private long? _id;
+
         private string _route;
 
-        public string Route
+        private string _identification;
+
+        private string _propertyName;
+        private string _propertyValue;
+
+
+        public long? Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        public string? Route
         {
             get { return _route; }
             set
@@ -16,26 +30,44 @@ namespace BlazorApp.Shared
             }
         }
 
-        public List<SiteProperty> Properties { get; set; }
+        public string? Identification
+        {
+            get { return _identification; }
+            set
+            {
+                _identification = value;
+            }
+        }
 
-        public List<IdConfiguration> SpecificIdProperties { get; set; }
+        public string? PropertyName
+        {
+            get { return _propertyName; }
+            set
+            {
+                _propertyName = value;
+            }
+        }
+        public string? PropertyValue
+        {
+            get { return _propertyValue; }
+            set
+            {
+                _propertyValue = value;
+            }
+        }
 
         public Configuration() { }
         public Configuration(bool initAll)
         {
             if (initAll)
             {
-                Properties = new List<SiteProperty>();
-                Properties.Add(new SiteProperty());
 
-                SpecificIdProperties = new List<IdConfiguration>();
-                SpecificIdProperties.Add(new IdConfiguration(initAll));
             }
         }
 
         public bool HasDataChanged()
         {
-            return (this.HasChange == "1") || (Properties != null && Properties.Any(x => x.HasDataChanged())) || (SpecificIdProperties != null && SpecificIdProperties.Any(x => x.HasDataChanged()));
+            return HasChange == "1";
         }
     }
 }

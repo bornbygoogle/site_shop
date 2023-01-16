@@ -1,5 +1,4 @@
-﻿@using MudBlazor;
-@using BlazorApp.Shared;
+﻿@using BlazorApp.Shared;
 @inject NavigationManager NavigationManager
 
 <MudCarousel id="@ClsCommon.IndexCarouselId"
@@ -67,7 +66,7 @@
     [CascadingParameter(Name = "DataSwanShop")]
     private SwanShop? Data { get; set; }
 
-    private IdConfiguration _configBanner = null;
+    //private IdConfiguration _configBanner = null;
 
     private string _shopName = string.Empty;
 
@@ -86,39 +85,39 @@
         if (Data != null && Data.Configs != null && Data.Configs.Count > 0)
         {
             var indexConfigs = Data.Configs.Where(x => string.IsNullOrEmpty(x.Route) || x.Route == "Index");
-            if (indexConfigs.Count() > 0)
-            {
-                foreach (var item in indexConfigs)
-                {
-                    if (item.Properties != null && item.Properties.Count > 0)
-                    {
-                        var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
-                        if (configShopName != null)
-                            _shopName = configShopName.Value;
-                    }
+            //if (indexConfigs.Count() > 0)
+            //{
+            //    foreach (var item in indexConfigs)
+            //    {
+            //        if (item.Properties != null && item.Properties.Count > 0)
+            //        {
+            //            var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
+            //            if (configShopName != null)
+            //                _shopName = configShopName.Value;
+            //        }
 
-                    if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
-                    {
-                        var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
-                        if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
-                        {
-                            _carouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault()?.Value.Replace("|", ";") ?? string.Empty;
+            //        if (item.SpecificIdProperties != null && item.SpecificIdProperties.Count() > 0)
+            //        {
+            //            var configCarousel = item.SpecificIdProperties.Where(x => x.Id == ClsCommon.IndexCarouselId).FirstOrDefault();
+            //            if (configCarousel != null && configCarousel.Properties != null && configCarousel.Properties.Count() > 0)
+            //            {
+            //                _carouselStyle = configCarousel.Properties.Where(x => x.Name == "Style").FirstOrDefault()?.Value.Replace("|", ";") ?? string.Empty;
 
-                            var valueShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault()?.Value ?? "0";
-                            _carouselShowArrows = valueShowArrows == "1" ? true : false;
+            //                var valueShowArrows = configCarousel.Properties.Where(x => x.Name == "ShowArrows").FirstOrDefault()?.Value ?? "0";
+            //                _carouselShowArrows = valueShowArrows == "1" ? true : false;
 
-                            var valueShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault()?.Value ?? "0";
-                            _carouselShowBullets = valueShowBullets == "1" ? true : false;
+            //                var valueShowBullets = configCarousel.Properties.Where(x => x.Name == "ShowBullets").FirstOrDefault()?.Value ?? "0";
+            //                _carouselShowBullets = valueShowBullets == "1" ? true : false;
 
-                            var valueEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault()?.Value ?? "0";
-                            _carouselEnableSwipeGesture = valueEnableSwipeGesture == "1" ? true : false;
+            //                var valueEnableSwipeGesture = configCarousel.Properties.Where(x => x.Name == "EnableSwipeGesture").FirstOrDefault()?.Value ?? "0";
+            //                _carouselEnableSwipeGesture = valueEnableSwipeGesture == "1" ? true : false;
 
-                            var valueAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault()?.Value ?? "0";
-                            _carouselAutoCycle = valueAutoCycle == "1" ? true : false;
-                        }
-                    }
-                }
-            }
+            //                var valueAutoCycle = configCarousel.Properties.Where(x => x.Name == "AutoCycle").FirstOrDefault()?.Value ?? "0";
+            //                _carouselAutoCycle = valueAutoCycle == "1" ? true : false;
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }

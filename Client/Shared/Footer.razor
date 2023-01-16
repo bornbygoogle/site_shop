@@ -147,40 +147,40 @@ else
             {
                 foreach (var item in indexConfigs)
                 {
-                    if (item.Properties != null && item.Properties.Count > 0)
-                    {
-                        var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
-                        if (configShopName != null)
-                            _shopName = configShopName.Value;
+                    //if (item.Properties != null && item.Properties.Count > 0)
+                    //{
+                    //    var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
+                    //    if (configShopName != null)
+                    //        _shopName = configShopName.Value;
 
-                        var configShopAddress = item.Properties.Where(x => x.Name == "ShopAddress").FirstOrDefault();
-                        if (configShopAddress != null)
-                            _shopAddress = configShopAddress.Value;
+                    //    var configShopAddress = item.Properties.Where(x => x.Name == "ShopAddress").FirstOrDefault();
+                    //    if (configShopAddress != null)
+                    //        _shopAddress = configShopAddress.Value;
 
-                        var configShopTel = item.Properties.Where(x => x.Name == "ShopTel").FirstOrDefault();
-                        if (configShopTel != null)
-                            _shopTelephone = configShopTel.Value;
+                    //    var configShopTel = item.Properties.Where(x => x.Name == "ShopTel").FirstOrDefault();
+                    //    if (configShopTel != null)
+                    //        _shopTelephone = configShopTel.Value;
 
-                        var configShopMail = item.Properties.Where(x => x.Name == "ShopMail").FirstOrDefault();
-                        if (configShopMail != null)
-                            _shopMail = configShopMail.Value;
+                    //    var configShopMail = item.Properties.Where(x => x.Name == "ShopMail").FirstOrDefault();
+                    //    if (configShopMail != null)
+                    //        _shopMail = configShopMail.Value;
 
-                        var configShopLinkFacebook = item.Properties.Where(x => x.Name == "ShopLinkFB").FirstOrDefault();
-                        if (configShopLinkFacebook != null)
-                            _shopLinkFacebook = configShopLinkFacebook.Value;
+                    //    var configShopLinkFacebook = item.Properties.Where(x => x.Name == "ShopLinkFB").FirstOrDefault();
+                    //    if (configShopLinkFacebook != null)
+                    //        _shopLinkFacebook = configShopLinkFacebook.Value;
 
-                        var configShopLinkInstagram = item.Properties.Where(x => x.Name == "ShopLinkIG").FirstOrDefault();
-                        if (configShopLinkInstagram != null)
-                            _shopLinkInstagram = configShopLinkInstagram.Value;
+                    //    var configShopLinkInstagram = item.Properties.Where(x => x.Name == "ShopLinkIG").FirstOrDefault();
+                    //    if (configShopLinkInstagram != null)
+                    //        _shopLinkInstagram = configShopLinkInstagram.Value;
 
-                        var configShopLinkTwitter = item.Properties.Where(x => x.Name == "ShopLinkTW").FirstOrDefault();
-                        if (configShopLinkTwitter != null)
-                            _shopLinkTwitter = configShopLinkTwitter.Value;
+                    //    var configShopLinkTwitter = item.Properties.Where(x => x.Name == "ShopLinkTW").FirstOrDefault();
+                    //    if (configShopLinkTwitter != null)
+                    //        _shopLinkTwitter = configShopLinkTwitter.Value;
 
-                        var configShopLinkLinkedIn = item.Properties.Where(x => x.Name == "ShopLinkLI").FirstOrDefault();
-                        if (configShopLinkLinkedIn != null)
-                            _shopLinkLinkedIn = configShopLinkLinkedIn.Value;
-                    }
+                    //    var configShopLinkLinkedIn = item.Properties.Where(x => x.Name == "ShopLinkLI").FirstOrDefault();
+                    //    if (configShopLinkLinkedIn != null)
+                    //        _shopLinkLinkedIn = configShopLinkLinkedIn.Value;
+                    //}
                 }
             }
 

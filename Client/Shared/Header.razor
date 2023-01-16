@@ -87,12 +87,12 @@ else
             {
                 foreach (var item in indexConfigs)
                 {
-                    if (item.Properties != null && item.Properties.Count > 0)
-                    {
-                        var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
-                        if (configShopName != null)
-                            _shopName = configShopName.Value;
-                    }
+                    //if (item.Properties != null && item.Properties.Count > 0)
+                    //{
+                    //    var configShopName = item.Properties.Where(x => x.Name == "ShopName").FirstOrDefault();
+                    //    if (configShopName != null)
+                    //        _shopName = configShopName.Value;
+                    //}
                 }
             }
 

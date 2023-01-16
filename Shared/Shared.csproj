@@ -6,11 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="6.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Radzen.Blazor" Version="4.4.8" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="WMBlazorSlickCarousel" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

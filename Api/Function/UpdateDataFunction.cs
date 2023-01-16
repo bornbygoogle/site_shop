@@ -34,53 +34,53 @@ namespace BlazorApp.Api.Function
                 if (data != null && data.HasDataChanged())
                 {
                     //Clear all DATA blob 
-                    if (data.Datas != null && data.Datas.Count > 0)
+                    if (data.Images != null && data.Images.Count > 0)
                     {
-                        var listDataChanged = data.Datas.Where(x => x.HasDataChanged()).ToList();
+                        var listDataChanged = data.Images.Where(x => x.HasDataChanged()).ToList();
 
-                        data.Datas.Clear();
-                        data.Datas.AddRange(listDataChanged);
+                        data.Images.Clear();
+                        data.Images.AddRange(listDataChanged);
 
-                        if (data.Datas.Count > 0)
+                        if (data.Images.Count > 0)
                         {
-                            foreach (var item in data.Datas)
-                            {
-                                if (item.HasDataChanged())
-                                {
-                                    if (!string.IsNullOrEmpty(item.ImageUrl))
-                                    {
-                                        var deleteImage = cloudinary.Destroy(new DeletionParams(Path.GetFileNameWithoutExtension(item.ImageUrl)));
-                                    }
+                            //foreach (var item in data.Datas)
+                            //{
+                            //    if (item.HasDataChanged())
+                            //    {
+                            //        if (!string.IsNullOrEmpty(item.ImageUrl))
+                            //        {
+                            //            var deleteImage = cloudinary.Destroy(new DeletionParams(Path.GetFileNameWithoutExtension(item.ImageUrl)));
+                            //        }
 
-                                    if (item.ImageBlob != null && item.ImageBlob.Length > 0)
-                                    {
-                                        var currentArticle = data.Articles.Where(x => x.Id == item.ArticleId).FirstOrDefault();
-                                        if (currentArticle != null)
-                                        {
-                                            var fileName = Guid.NewGuid().ToString();
+                            //        if (item.ImageBlob != null && item.ImageBlob.Length > 0)
+                            //        {
+                            //            var currentArticle = data.Articles.Where(x => x.Id == item.ArticleId).FirstOrDefault();
+                            //            if (currentArticle != null)
+                            //            {
+                            //                var fileName = Guid.NewGuid().ToString();
 
-                                            var uploadParams = new ImageUploadParams()
-                                            {
-                                                File = new FileDescription(fileName, new MemoryStream(item.ImageBlob)),
-                                                PublicId = fileName
-                                            };
+                            //                var uploadParams = new ImageUploadParams()
+                            //                {
+                            //                    File = new FileDescription(fileName, new MemoryStream(item.ImageBlob)),
+                            //                    PublicId = fileName
+                            //                };
 
-                                            var uploadResult = cloudinary.Upload(uploadParams);
+                            //                var uploadResult = cloudinary.Upload(uploadParams);
 
-                                            if (uploadResult != null)
-                                            {
-                                                item.ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
-                                                item.ImageBlob = null;
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                    item.ImageBlob = null;                                   
-                            }
+                            //                if (uploadResult != null)
+                            //                {
+                            //                    item.ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                            //                    item.ImageBlob = null;
+                            //                }
+                            //            }
+                            //        }
+                            //    }
+                            //    else
+                            //        item.ImageBlob = null;                                   
+                            //}
                         }
                         else
-                            data.Datas = null;
+                            data.Images = null;
                     }
 
                     if (!_onWork)

@@ -1,356 +1,51 @@
-﻿@using MudBlazor;
-@using BlazorApp.Shared;
+﻿@page "/shop"
 @using System.Globalization;
 
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-
-@page "/shop"
-
-<PageTitle>@pageTitle</PageTitle>
-
-<!-- Start Content -->
-<div class="container py-5">
-    <div class="row">
-
-        <div class="col-lg-3 bg-white">
-            <h1 class="h2 pb-4">Categories</h1>
-
-            @if (data != null && data.Categories != null && data.Categories.Count() > 0)
-            {
-                foreach (var itemCategorie in data.Categories)
+<PageTitle>Shop</PageTitle>
+<div class="row col-12" style="margin: 0px; padding: 20px">
+    <div style="display: inline-block; margin: 0px; padding: 0px" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+        <RadzenText Text="Shop by" TextStyle="Radzen.Blazor.TextStyle.H4" Style="margin-bottom: 2px; margin-top: 20px; padding-bottom: 10px;" />
+        <RadzenPanelMenu Style="background-color: rgba(0, 0, 0, 0); padding-bottom: 10px; padding-top: 0px">
+            <RadzenPanelMenuItem Text="Collection" Expanded="true" Style="color: #000000; background-color: rgba(0, 0, 0, 0); border: 0px none rgba(0, 0, 0, 0); margin-bottom: 5px; margin-top: 5px">
+                @if (Data != null && Data.Categories != null)
                 {
-                    <MudNavMenu Class="templatemo-accordion">
-                        <MudNavGroup Title="@itemCategorie.Name" ExpandedChanged="(() => ExpandedCategorie(itemCategorie.Name))" 
-                            Class="bg-white justify-content-between h3 text-decoration-none pull-right fa fa-fw fa-chevron-circle-down mt-1">
-
-                            @{
-                                List<SwanShopSubCategorie> listSubCategories = null;
-
-                                if (data.SubCategories != null && data.SubCategories.Count > 0)
-                                    listSubCategories = data.SubCategories.Where(x => x.CatId == itemCategorie.Id).ToList();
-                            }
-
-                            @if (listSubCategories != null && listSubCategories.Count > 0)
-                            {
-                                foreach (var itemSubCategorie in listSubCategories)
-                                {
-                                    <MudNavLink class="pl-3 text-decoration-none" @onclick="(() => DisplaySubCategorie(itemSubCategorie.Name))">@itemSubCategorie.Name</MudNavLink>
-                                }
-                            }
-
-                        </MudNavGroup>
-                    </MudNavMenu>
-                }
-            }
-        </div>
-
-        <div class="col-lg-9">
-            @*            <div class="row">
-            <div class="col-md-6">
-            <ul class="list-inline shop-top-menu pb-3 pt-1">
-            <li class="list-inline-item">
-            <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
-            </li>
-            <li class="list-inline-item">
-            <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
-            </li>
-            <li class="list-inline-item">
-            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
-            </li>
-            </ul>
-            </div>
-            <div class="col-md-6 pb-4">
-            <div class="d-flex">
-            <select class="form-control">
-            <option>Featured</option>
-            <option>A to Z</option>
-            <option>Item</option>
-            </select>
-            </div>
-            </div>
-            </div>*@
-            <div class="row pt-2 pb-2">
-
-                @if (_listDataShop != null && _listDataShop.Count() > 0)
-                {
-                    @foreach (var itemShop in _listDataShop)
+                    foreach (var categorie in Data.Categories)
                     {
-                        SwanShopArticle article = null;
-
-                        if (itemShop.ArticleId.HasValue)
-                            article = data.Articles.Where(x => x.Id == itemShop.ArticleId.Value).FirstOrDefault();
-
-                        if (article != null)
-                        {
-                            <div class="col-md-4 m-auto mb-4 product-wap rounded-0 px-1 py-1">
-                                <div class="card rounded-0">
-                                    <a href="/shopitem/@itemShop.ArticleId" class="h3 text-decoration-none"><img class="card-img rounded-0 img-fluid px-2 py-2" src="@itemShop.ImageUrl"></a>
-                                </div>
-                                <div class="card-body">
-                                    <a href="/shopitem/@itemShop.ArticleId" class="h3 text-decoration-none">@article.Title</a>
-                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                        <li>@article.SubTitle</li>
-                                        <li class="pt-2">
-                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                            <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-unstyled d-flex justify-content-center mb-1">
-                                        <li>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-warning fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                            <i class="text-muted fa fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <p class="text-center mb-0"> €@article.Price.Value.ToString(CultureInfo.InvariantCulture) </p>
-                                </div>
-                            </div>
-                        }
+                        <RadzenPanelMenuItem Text="@(categorie.Name)" Style="color: #000000; background-color: rgba(0, 0, 0, 0)"></RadzenPanelMenuItem>
                     }
                 }
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Price" Style="color: #000000; background-color: rgba(0, 0, 0, 0); border: 0px none rgba(0, 0, 0, 0); margin-top: 5px; margin-bottom: 5px">
+                <RadzenPanelMenuItem Text="10 €"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="15 €"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="20 €"></RadzenPanelMenuItem>
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+    </div>
 
-            </div>
-            <div div="row">
-                <ul class="pagination pagination-lg justify-content-end">
-                    <li class="page-item disabled">
-                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div style="display: inline-block; padding: 0px; background-color: rgba(0, 0, 0, 0)" class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 
+        <RadzenPanel class="col-12" Style="margin-right: 0px; margin-bottom: 20px; margin-top: 20px; background-color: rgba(0, 0, 0, 0)">
+
+            @if (Data != null && Data.Articles != null)
+            {
+                foreach(var article in Data.Articles)
+                {
+                    var articleImage = Data.Images.Where(x => x.ArticleId == article.Id).FirstOrDefault().ImageUrl;
+
+                    <RadzenCard Style="display: inline-block; margin-bottom: 10px; margin-top: 10px; margin: 10px" class="col-lg-3 col-md-3 col-sm-12 col-xs-12" onclick="@(() => OpenOrder(article.Id.Value))">
+                        <div class="row col-12" style="margin-bottom: -30px; margin: 0px">
+                            <RadzenBadge Text="sale" BadgeStyle="Radzen.BadgeStyle.Info" Variant="Radzen.Variant.Filled" Style="position: relative; top: 0px; left: 0px; width: 100px; height: 30px; z-index: 10; margin-top: 10px; margin-left: 10px; padding-top: 6px; background-color: #4f4f4f"></RadzenBadge>
+                            <RadzenImage Path="@articleImage" Style="position: relative; display: block; top: -30px; padding: 0px"></RadzenImage>
+                        </div>
+                        <div class="row col-12" style="margin: 0px">
+                            <RadzenButton onclick="@(() => OpenOrder(article.Id.Value))" Text="@(article.Title)" ButtonStyle="Radzen.ButtonStyle.Light" Style="background-color: rgba(0, 0, 0, 0); text-transform: none" Size="Radzen.ButtonSize.Medium" Shade="Radzen.Shade.Light"></RadzenButton>
+                            <RadzenText Text="@($"{(article.Price.HasValue ? article.Price.Value.ToString(CultureInfo.InvariantCulture) : "0")}€")" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 5px; padding-bottom: 5px" />
+                        </div>
+                    </RadzenCard>
+                }
+            }
+
+        </RadzenPanel>
     </div>
 </div>
-<!-- End Content -->
-<!-- Start Brands -->
-<section class="bg-light py-5">
-    <div class="container my-4">
-        <div class="row text-center py-3">
-            <div class="col-lg-6 m-auto">
-                <h1 class="h1">Our Brands</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    Lorem ipsum dolor sit amet.
-                </p>
-            </div>
-
-            <BlazorSlickCarousel Configurations="shopBrandsConfigurations" Id="slick-carousel-shop" @ref="shopBrandsCarousel">
-                <BlazorSlickCarouselContent>
-                    <div class="col-3 p-md-5">
-                        <div class=product-links-wap card rounded-0">
-                            <img class="img-fluid brand-img" src="assets/img/brand_01.png">
-                        </div>
-                    </div>
-                    <div class="col-3 p-md-5">
-                        <div class=product-links-wap card rounded-0">
-                            <img class="img-fluid brand-img" src="assets/img/brand_02.png">
-                        </div>
-                    </div>
-                    <div class="col-3 p-md-5">
-                        <div class=product-links-wap card rounded-0">
-                            <img class="img-fluid brand-img" src="assets/img/brand_03.png">
-                        </div>
-                    </div>
-                    <div class="col-3 p-md-5">
-                        <div class=product-links-wap card rounded-0">
-                            <img class="img-fluid brand-img" src="assets/img/brand_04.png">
-                        </div>
-                    </div>
-                </BlazorSlickCarouselContent>
-                <BlazorSlickCarouselLoading></BlazorSlickCarouselLoading>
-            </BlazorSlickCarousel>
-
-        </div>
-    </div>
-</section>
-<!--End Brands-->
-@code {
-    private string _currentUrl = null;
-
-    Dictionary<string, bool> _dictCategorieExpanded = new Dictionary<string, bool>();
-
-    string _expandedCategorie = string.Empty;
-    string _expandedSubCategorie = string.Empty;
-
-    bool _isGenderExpanded = false;
-    bool _isSaleExpanded = false;
-    bool _isProductExpanded = false;
-
-    [CascadingParameter(Name = "DataSwanShop")]
-    SwanShop? data { get; set; }
-
-    public BlazorSlickCarousel? shopBrandsCarousel;
-    public WMBSCInitialSettings? shopBrandsConfigurations;
-
-    private string pageTitle = string.Empty;
-
-    private List<SwanShopData> _listDataShop = new List<SwanShopData>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        _currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, string.Empty).ToLower();
-
-        //data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (data != null)
-        {
-            if (data.Configs != null && data.Configs.Count > 0)
-            {
-                var shopConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route.ToLower() == _currentUrl);
-                if (shopConfigs.Count() > 0)
-                {
-                    foreach (var item in shopConfigs)
-                    {
-                        if (item.Properties != null && item.Properties.Count > 0)
-                        {
-                            var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
-                            if (configPageTitle != null)
-                                pageTitle = configPageTitle.Value;
-                        }
-                    }
-                }
-            }
-
-            if (data.Categories != null && data.Categories.Count > 0)
-            {
-                //Ajout variable indiquant l'état des catégories (ouvert ou non)
-                foreach (var itemCategorie in data.Categories)
-                {
-                    if (!_dictCategorieExpanded.ContainsKey(itemCategorie.Name))
-                        _dictCategorieExpanded.TryAdd(itemCategorie.Name, false);
-                }
-            }
-
-            DisplayItem();
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        // to <= 800px screen
-        WMBSCSettings breakpoint800Settings = new WMBSCSettings
-            {
-                slidesToShow = 2,
-                arrows = false,
-                dots = false
-            };
-        WMBSCResponsiveSettings breakpoint800Responsive = new WMBSCResponsiveSettings
-            {
-                breakpoint = 800,
-                settings = breakpoint800Settings
-            };
-
-        // to <= 400px screen
-        WMBSCSettings breakpoint400Settings = new WMBSCSettings
-            {
-                slidesToShow = 1,
-                arrows = false
-            };
-        WMBSCResponsiveSettings breakpoint400Responsive = new WMBSCResponsiveSettings
-            {
-                breakpoint = 400,
-                settings = breakpoint400Settings
-            };
-
-        // add responsivity
-        List<WMBSCResponsiveSettings> responsiveSettingsList = new List<WMBSCResponsiveSettings>();
-        responsiveSettingsList.Add(breakpoint800Responsive);
-        responsiveSettingsList.Add(breakpoint400Responsive);
-
-        // the carousel configurations
-        shopBrandsConfigurations = new WMBSCInitialSettings
-            {
-                arrows = false,
-                dots = false,
-                slidesToShow = 3,
-                slidesToScroll = 3,
-                infinite = true,
-                responsive = responsiveSettingsList,
-                centerMode = true,
-                adaptiveHeight = true,
-                autoplay = true,
-                touchMove = false
-            };
-    }
-
-    protected bool ExpandedCategorie(string categorieName)
-    {
-        bool categorieExpanded = false;
-
-        if (_dictCategorieExpanded.ContainsKey(categorieName) && _dictCategorieExpanded.TryGetValue(categorieName, out categorieExpanded))
-        {
-            if (categorieExpanded)
-                _expandedCategorie = null;
-            else
-                _expandedCategorie = categorieName;
-
-            _dictCategorieExpanded.Remove(categorieName);
-            _dictCategorieExpanded.TryAdd(categorieName, !categorieExpanded);
-        }
-
-        DisplayItem(data.Categories?.Where(x => x.Name == _expandedCategorie)?.FirstOrDefault()?.Id);
-
-        return categorieExpanded;
-    }
-
-    protected void DisplaySubCategorie(string subCategorieName)
-    {
-        if (!string.IsNullOrEmpty(_expandedSubCategorie) && !string.IsNullOrEmpty(subCategorieName))
-            _expandedSubCategorie = subCategorieName;
-        else if (string.IsNullOrEmpty(_expandedSubCategorie))
-            _expandedSubCategorie = subCategorieName;
-        else
-            _expandedSubCategorie = null;
-
-        if (!string.IsNullOrEmpty(_expandedSubCategorie))
-            DisplayItem(data.Categories?.Where(x => x.Name == _expandedCategorie)?.FirstOrDefault()?.Id,
-                        data.SubCategories?.Where(x => x.Name == _expandedSubCategorie)?.FirstOrDefault()?.Id);
-        else
-            DisplayItem(data.Categories?.Where(x => x.Name == _expandedCategorie)?.FirstOrDefault()?.Id);
-
-    }
-
-    protected void DisplayItem(long? categorieId = null, long? subCategorieId = null)
-    {
-        if (data != null && data.Datas != null && data.Datas.Count > 0)
-        {
-            _listDataShop.Clear();
-
-            List<SwanShopArticle> shopArticles = data.Articles;
-
-            if (categorieId.HasValue)
-                shopArticles = shopArticles.Where(x => x.CategorieId.HasValue && x.CategorieId.Value == categorieId.Value).Distinct().ToList();
-
-            if (subCategorieId.HasValue)
-                shopArticles = shopArticles.Where(x => x.SubCategorieId.HasValue && x.SubCategorieId == subCategorieId).Distinct().ToList();
-
-            List<long?> listArticles = shopArticles.Select(y => y.Id).ToList();
-            if (listArticles != null && listArticles.Count() > 0)
-            {
-                foreach (var artId in listArticles)
-                {
-                    var articleData = data.Datas.Where(x => x.ArticleId == artId).FirstOrDefault();
-                    if (articleData != null)
-                        _listDataShop.Add(articleData);
-                }
-            }
-            else
-                _listDataShop.AddRange(data.Datas);
-        }
-    }
-}

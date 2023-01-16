@@ -16,6 +16,8 @@
 
         private decimal? _price;
 
+        private long? _nbrSold;
+
         public long? Id
         {
             get { return _id; }
@@ -96,7 +98,14 @@
             }
         }
 
-
+        public long? NbrSold
+        {
+            get { return _nbrSold; }
+            set
+            {
+                _nbrSold = value;
+            }
+        }
 
         public SwanShopArticle() { }
 
@@ -111,6 +120,11 @@
         public bool HasDataChanged()
         {
             return HasChange == "1";
+        }
+
+        public void ClearAllChanges()
+        {
+            this.HasChange = null;
         }
     }
 }

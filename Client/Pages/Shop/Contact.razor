@@ -75,12 +75,12 @@
             {
                 foreach (var item in indexConfigs)
                 {
-                    if (item.Properties != null && item.Properties.Count > 0)
-                    {
-                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
-                        if (configPageTitle != null)
-                            pageTitle = configPageTitle.Value;
-                    }
+                    //if (item.Properties != null && item.Properties.Count > 0)
+                    //{
+                    //    var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
+                    //    if (configPageTitle != null)
+                    //        pageTitle = configPageTitle.Value;
+                    //}
                 }
             }
 

@@ -1,76 +1,85 @@
 ﻿@page "/"
+@using System.Globalization;
 
-@using BlazorApp.Shared;
+<PageTitle>@_pageTitle</PageTitle>
 
-@inject HttpClient Http
+<div class="row">
+    <div class="col-12">
 
-@if (data != null)
-{
-    <PageTitle>@pageTitle</PageTitle>
+        <RadzenLink Path="/shop">
+            <div class="row col-12 py-3" style="padding: 0px; margin-left: 0px; margin-right: 0px; width: 100%; max-width: 100%; display: block">
+                <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0" style="display: inline-block; padding: 0px; margin: 0px"></div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="padding: 0px; background-image: url(@_currentImageBanner); background-repeat: no-repeat; background-position: center; color: #050505; background-color: rgba(0, 0, 0, 0); height: 600px; max-height: 600px; margin-top: auto; margin-bottom: auto; margin: 0px; display: inline-block"></div>
+                <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0" style="display: inline-block; padding: 0px; margin: 0px"></div>
+            </div>
+        </RadzenLink>
 
-    <Banner></Banner>
+        <div class="row col-12 flex-row" style="margin-left: 0px; margin-right: 0px; width: 100%; max-width: 100%; text-align: center; visibility: visible; margin-top: 50px; margin-bottom: 30px; vertical-align: middle">
+            <div style="display: inline-flex; padding: 0px" class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="display: inline-flex">
+                <RadzenText Text="Best sellers" TextAlign="Radzen.TextAlign.Center" TextStyle="Radzen.Blazor.TextStyle.H4" Style="text-transform: uppercase; display: inline-flex; visibility: visible; text-align: center; vertical-align: middle; margin-left: auto; padding: auto; margin-right: auto" class="col-12 justify-content-center" />
+            </div>
+            <div style="padding: 0px; display: inline-flex" class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+        </div>
+        <div class="row col-12 flex-row" style="margin-left: 0px; margin-right: 0px; width: 100%; max-width: 100%; visibility: visible; margin: 0px; padding: 0px; display: flex; margin-top: 50px; margin-bottom: 50px">
+            <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0" style="padding: 0px; text-align: left; margin: 0px; vertical-align: middle; display: inline-flex"></div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="max-height: inherit; text-align: center; display: inline-flex">
+                <div class="row col-12 flex-row" style="width: 100%; max-width: 100%; margin: 0px">
 
-@*    <MonthCategories></MonthCategories>
-
-    <FeaturedProduct></FeaturedProduct>*@
-}
-
-@code
-{
-    private bool ShowErrors;
-    private string Error = "";
-
-    [CascadingParameter(Name = "DataSwanShop")]
-    protected SwanShop? data { get; set; }
-
-    private string pageTitle = string.Empty;
-
-    protected override async Task OnInitializedAsync()
-    {
-        //data = await Http.GetFromJsonAsync<SwanShop>($"/api/GetData");
-
-        //var test = data;
-    }
-
-    protected override void OnParametersSet()
-    {
-        if (data != null && data.Configs != null && data.Configs.Count > 0)
-        {
-            var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
-            if (indexConfigs.Count() > 0)
-            {
-                foreach (var item in indexConfigs)
-                {
-                    if (item.Properties != null && item.Properties.Count > 0)
+                    @if (_bestSellers3Articles != null && _bestSellers3Articles.Count > 0)
                     {
-                        var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
-                        if (configPageTitle != null)
-                            pageTitle = configPageTitle.Value;
+                        foreach (var article in _bestSellers3Articles)
+                        {
+                            var articleImage = _bestSellers3ArticlesImages.Where(x => x.ArticleId == article.Id).FirstOrDefault().ImageUrl;
+
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 flex-column" style="margin: auto; padding: auto; display: inline-flex; max-height: auto">
+                                <RadzenImage Path="@articleImage" Style="position: relative; display: block; top: -40px; padding: 0px; margin-top: auto; margin-bottom: auto; padding-top: auto; padding-bottom: auto; width: 100%; max-width: 100%;" class="flex-row py-2"></RadzenImage>
+                            </div>
+                        }
                     }
-                }
-            }
 
-            //StateHasChanged();
-        }
-    }
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0" style="margin: auto; padding: auto; display: inline-flex"></div>
+        </div>
+        <div class="row col-12 flex-row" style="margin-left: 0px; margin-right: 0px; width: 100%; max-width: 100%; text-align: center; visibility: visible; margin-top: 50px; margin-bottom: 30px; vertical-align: middle">
+            <div style="display: inline-flex; padding: 0px" class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="display: inline-flex">
+                <RadzenText Text="New arrivals" TextAlign="Radzen.TextAlign.Center" TextStyle="Radzen.Blazor.TextStyle.H4" Style="text-transform: uppercase; display: inline-flex; visibility: visible; text-align: center; vertical-align: middle; margin-left: auto; padding: auto; margin-right: auto" class="col-12 justify-content-center" />
+            </div>
+            <div style="padding: 0px; display: inline-flex" class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+        </div>
+        <div class="row" style="padding: 0px; margin-left: 0px; margin-right: 0px; max-height: 100%; width: 100%; max-width: 100%; display: block; visibility: hidden">
+            <div class="col-12" style="width: 100%; max-width: 100%; padding: 12px">
+                <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0" style="text-align: center; display: inline-block; padding: 0px; margin: 0px"></div>
+                <div class="col-lg-8" style="display: inline-block; padding: 0px; margin: 0px; visibility: visible">
+                    <div class="row col-12" style="width: 100%; max-width: 100%; margin: 0px">
+                        @if (_last3Articles != null && _last3Articles.Count > 0)
+                        {
+                            foreach (var article in _last3Articles)
+                            {
+                                var articleImage = _last3ArticlesImages.Where(x => x.ArticleId == article.Id).FirstOrDefault().ImageUrl;
 
-    protected override async void OnInitialized()
-    {
-        //if (data != null && data.Configs != null && data.Configs.Count > 0)
-        //{
-        //    var indexConfigs = data.Configs.Where(x => !string.IsNullOrEmpty(x.Route) && x.Route == "Index");
-        //    if (indexConfigs.Count() > 0)
-        //    {
-        //        foreach (var item in indexConfigs)
-        //        {
-        //            if (item.Properties != null && item.Properties.Count > 0)
-        //            {
-        //                var configPageTitle = item.Properties.Where(x => x.Name == nameof(PageTitle)).FirstOrDefault();
-        //                if (configPageTitle != null)
-        //                    pageTitle = configPageTitle.Value;
-        //            }
-        //        }
-        //    }
-        //}
-    }
-}
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 py-2" style="display: inline-block">
+                                    <RadzenCard Style="width: 100%; max-width: 100%; height: 100%; max-height: 100%; padding: 0px">
+                                        <div class="row container-fluid d-flex flex-column h-100" style="width: 100%; max-width: 100%; margin: 0px">
+                                            <div class="row mt-auto mb-auto" style="width: 100%; max-width: 100%; margin: 0px">
+                                                <RadzenImage Path="@articleImage" Style="margin: 0px; padding-top: 16px; padding-bottom: 16px; padding-left: 0px; padding-right: 0px" class="mt-auto mb-auto"></RadzenImage>
+                                            </div>
+                                            <div class="row mt-auto mb-3" style="margin: 0px; text-align: center;">
+                                                <RadzenText Text="@article.Title" TextAlign="Radzen.TextAlign.Center" Style="border-bottom: 0px none #000000" />
+                                                <RadzenText Text="-----" TextAlign="Radzen.TextAlign.Center" Style="border-bottom: 0px none #000000" />
+                                                <RadzenText Text="@(article.Price.HasValue ? article.Price.Value.ToString(CultureInfo.InvariantCulture) : "0")" TextAlign="Radzen.TextAlign.Center" Style="border-bottom: 0px none #000000" class="mb-2" />
+                                            </div>
+                                        </div>
+                                    </RadzenCard>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0" style="display: inline-block; padding: 0px; margin: 0px"></div>
+            </div>
+        </div>
+    </div>
+</div>

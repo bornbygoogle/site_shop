@@ -3,17 +3,14 @@ using System.Linq;
 
 namespace BlazorApp.Shared
 {
-    public class SwanShopData : BaseDto
+    public class SwanShopImage : BaseDto
     {
         private long? _id;
 
+        private long? _configId;
         private long? _articleId;
 
-        private string _type;
-
         private string _imageUrl;
-
-        private byte[] _imageBlob;
 
         public long? Id
         {
@@ -24,30 +21,12 @@ namespace BlazorApp.Shared
             }
         }
 
-        public string Type
+        public long? ConfigId
         {
-            get { return _type; }
+            get { return _configId; }
             set
             {
-                _type = value;
-            }
-        }
-
-        public string ImageUrl
-        {
-            get { return _imageUrl; }
-            set
-            {
-                _imageUrl = value;
-            }
-        }
-
-        public byte[] ImageBlob
-        {
-            get { return _imageBlob; }
-            set
-            {
-                _imageBlob = value;
+                _configId = value;
             }
         }
 
@@ -60,9 +39,18 @@ namespace BlazorApp.Shared
             }
         }
 
-        public SwanShopData() { }
+        public string ImageUrl
+        {
+            get { return _imageUrl; }
+            set
+            {
+                _imageUrl = value;
+            }
+        }
 
-        public SwanShopData(bool initAll)
+        public SwanShopImage() { }
+
+        public SwanShopImage(bool initAll)
         {
             if (initAll)
             {
@@ -73,6 +61,11 @@ namespace BlazorApp.Shared
         public bool HasDataChanged()
         {
             return HasChange == "1";
+        }
+
+        public void ClearAllChanges()
+        {
+            this.HasChange = null;
         }
     }
 }

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using MudBlazor.Services;
 using BlazorApp.Client;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using Blazored.Modal;
+using Radzen;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,8 +15,10 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddMudServices();
-builder.Services.AddWMBSC();
+builder.Services.AddScoped<DialogService>();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<TooltipService>();
+builder.Services.AddScoped<ContextMenuService>();
 
 builder.Services.AddAuthorizationCore();
 //builder.Services.AddScoped<IAuthService, AuthService>();

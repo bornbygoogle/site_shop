@@ -13,7 +13,7 @@ namespace BlazorApp.Shared
 
         public List<SwanShopArticle> Articles { get; set; }
 
-        public List<SwanShopData> Datas { get; set; }
+        public List<SwanShopImage> Images { get; set; }
 
         public SwanShop() { }
         public SwanShop(bool initAll)
@@ -32,8 +32,8 @@ namespace BlazorApp.Shared
                 Articles = new List<SwanShopArticle>();
                 Articles.Add(new SwanShopArticle(initAll));
 
-                Datas = new List<SwanShopData>();
-                Datas.Add(new SwanShopData(initAll));
+                Images = new List<SwanShopImage>();
+                Images.Add(new SwanShopImage(initAll));
             }
         }
 
@@ -43,7 +43,7 @@ namespace BlazorApp.Shared
                     || (Categories != null && Categories.Any(x => x.HasDataChanged()))
                     || (SubCategories != null && SubCategories.Any(x => x.HasDataChanged()))
                     || (Articles != null && Articles.Any(x => x.HasDataChanged()))
-                    || (Datas != null && Datas.Any(x => x.HasDataChanged()));
+                    || (Images != null && Images.Any(x => x.HasDataChanged()));
         }
     }
 }

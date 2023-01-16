@@ -1,0 +1,77 @@
+﻿@page "/shop-item-page/{OrderID:int}"
+
+@inject Radzen.DialogService dialogService
+
+<div class="row">
+    <div class="col-12">
+        <div class="row" style="margin: 0px; padding-top: 10px; padding-bottom: 10px">
+            <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0" style="vertical-align: middle"></div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="vertical-align: middle">
+                <div class="row col-12" style="margin: 0px">
+                    <RadzenImage Path="@_imagePrincipalUrl" Style="float: right; display: block; padding: 16px" Click="@(() => @OpenPrincipalImage())"></RadzenImage>
+                </div>
+                <div class="row col-12" style="margin: 0px">
+
+                    @if (_currentArticleImages != null && _currentArticleImages.Count() > 0)
+                    {
+                        foreach (var itemImage in _currentArticleImages)
+                        {
+                            <div class="col-4" style="padding-left: 5px; padding-right: 5px;">
+                                <RadzenImage Path="@itemImage.ImageUrl" Style="width: 100%; padding-left: 5px; padding-right: 5px" Click="@(() => @ChangeImagePrincipal(@itemImage.Id))"></RadzenImage>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                <div class="row col-12" style="margin: 0px; padding-bottom: 5px">
+                    <RadzenText Text="@_currentArticle.Title" TextStyle="Radzen.Blazor.TextStyle.H4" Style="font-weight: bold" />
+                    <RadzenText Text="@_currentArticle.SubTitle" TextStyle="Radzen.Blazor.TextStyle.H5" Style="font-style: italic" />
+                    <RadzenText Text="Colors : White / Black" TextStyle="Radzen.Blazor.TextStyle.H5" Style="font-style: normal; font-weight: lighter" />
+                    <RadzenText Text="Product info : " TextStyle="Radzen.Blazor.TextStyle.H6" Style="margin-top: 20px; font-style: italic; text-decoration: underline" />
+                    <RadzenText Text="@_currentArticle.Description" TextStyle="Radzen.Blazor.TextStyle.Body1" Style="margin-left: 25px; font-style: italic; font-weight: lighter" />
+                    <RadzenText Text="Specification : " TextStyle="Radzen.Blazor.TextStyle.H6" Style="margin-top: 20px; font-style: italic; text-decoration: underline" />
+                    <ul style="padding-left: 20px; margin-left: 25px">
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </div>
+                <div class="row col-12" style="margin: 0px; padding-top: 5px; padding-bottom: 5px">
+                    <div class="col-6" style="vertical-align: middle; text-align: center">
+                        <RadzenButton Style="background-color: rgba(0, 0, 0, 0); color: #000000; border: 1px solid #000000" Text="Buy 1 (10€)"></RadzenButton>
+                    </div>
+                    <div class="col-6" style="vertical-align: middle; text-align: center">
+                        <RadzenButton Style="background-color: rgba(0, 0, 0, 0); color: #000000; border: 1px solid #000000" Text="Buy 2 (20€)"></RadzenButton>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0" style="vertical-align: middle"></div>
+        </div>
+        <div class="row col-12" style="margin: 0px; padding-top: 10px; padding-bottom: 10px; padding-right: 10px; padding-left: 10px">
+            <RadzenText Text="Related products" TextAlign="Radzen.TextAlign.Center" TextStyle="Radzen.Blazor.TextStyle.H4" Style="margin-top: 25px" />
+        </div>
+        <div class="row" style="margin: 0px; padding-top: 10px; padding-bottom: 10px">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="vertical-align: middle; padding-left: 5px; padding-right: 5px">
+                <RadzenCard Style="text-align: center; margin-top: 5px; margin-bottom: 5px">
+                    <RadzenImage Path="\images\item-1.png" Style="padding: 10px"></RadzenImage>
+                    <RadzenText Text="Text" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 10px; vertical-align: middle; padding-bottom: 5px" />
+                    <RadzenText Text="17€" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 5px; vertical-align: middle; padding-bottom: 5px" />
+                </RadzenCard>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="vertical-align: middle; padding-left: 5px; padding-right: 5px">
+                <RadzenCard Style="text-align: center; margin-top: 5px; margin-bottom: 5px">
+                    <RadzenImage Path="\images\item-1.png" Style="padding: 10px"></RadzenImage>
+                    <RadzenText Text="Text" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 10px; vertical-align: middle; padding-bottom: 5px" />
+                    <RadzenText Text="17€" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 5px; vertical-align: middle; padding-bottom: 5px" />
+                </RadzenCard>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="vertical-align: middle; padding-left: 5px; padding-right: 5px">
+                <RadzenCard Style="text-align: center; margin-top: 5px; margin-bottom: 5px">
+                    <RadzenImage Path="\images\item-1.png" Style="padding: 10px"></RadzenImage>
+                    <RadzenText Text="Text" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 10px; vertical-align: middle; padding-bottom: 5px" />
+                    <RadzenText Text="17€" TextAlign="Radzen.TextAlign.Center" Style="padding-top: 5px; vertical-align: middle; padding-bottom: 5px" />
+                </RadzenCard>
+            </div>
+        </div>
+    </div>
+</div>
